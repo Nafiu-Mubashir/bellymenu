@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { MapPin, Phone, Mail } from "lucide-react";
+import { FaInstagram, FaFacebook } from "react-icons/fa";
 
 const SERVICES_LINKS = [
   { label: "Wedding Catering", href: "/services/wedding-catering" },
@@ -44,8 +45,8 @@ export default function Footer() {
             {/* Social icons */}
             <div className="flex gap-3">
               {[
-                { href: "https://instagram.com/bellymenukitchen", Icon: "Instagram", label: "Instagram" },
-                { href: "https://facebook.com/bellymenukitchen", Icon: "Facebook", label: "Facebook" },
+                { href: "https://instagram.com/bellymenukitchen", Icon: FaInstagram, label: "Instagram" },
+                { href: "https://facebook.com/bellymenukitchen", Icon: FaFacebook, label: "Facebook" },
               ].map(({ href, Icon, label }) => (
                 <a
                   key={label}
@@ -55,7 +56,7 @@ export default function Footer() {
                   aria-label={label}
                   className="w-9 h-9 rounded-full border border-white/10 flex items-center justify-center text-neutral-400 hover:border-green-500 hover:text-green-400 transition-colors"
                 >
-                  <Icon size={15} />
+                  <Icon  />
                 </a>
               ))}
               {/* TikTok — lucide doesn't have one, use SVG */}

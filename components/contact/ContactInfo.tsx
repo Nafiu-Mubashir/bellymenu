@@ -5,6 +5,7 @@ import {
   MapPin, Phone, Mail, Clock,
    MessageCircle,
 } from "lucide-react";
+import { FaInstagram, FaFacebook } from "react-icons/fa";
 
 interface InfoItem {
   icon: React.ElementType;
@@ -50,7 +51,7 @@ const INFO_ITEMS: InfoItem[] = [
 
 const SOCIALS = [
   {
-    icon: "I",
+    icon: FaInstagram,
     label: "Instagram",
     handle: "@bellymenukitchen",
     href: "https://instagram.com/bellymenukitchen",
@@ -58,7 +59,7 @@ const SOCIALS = [
     bg: "bg-pink-50 border-pink-100 hover:border-pink-300",
   },
   {
-    icon: "F",
+    icon: FaFacebook,
     label: "Facebook",
     handle: "Bellymenu Kitchen",
     href: "https://facebook.com/bellymenukitchen",
