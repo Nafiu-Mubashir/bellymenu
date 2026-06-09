@@ -4,7 +4,6 @@ export const homepageSchema = defineType({
   name: "homepage",
   title: "Homepage",
   type: "document",
-  __experimental_actions: ["update", "publish"],
   fields: [
     defineField({
       name: "heroEyebrow",
@@ -51,7 +50,12 @@ export const homepageSchema = defineType({
             defineField({ name: "suffix", type: "string", title: "Suffix" }),
             defineField({ name: "label", type: "string", title: "Label" }),
           ],
-          preview: { select: { title: "value", subtitle: "label" } },
+          preview: {
+            select: {
+              title: "value",
+              subtitle: "label",
+            },
+          },
         },
       ],
       validation: (Rule) => Rule.max(4),

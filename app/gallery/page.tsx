@@ -6,8 +6,8 @@ import GalleryEventStrip from "@/components/gallery/GalleryEventStrip";
 import GalleryMasonry from "@/components/gallery/GalleryMasonry";
 import GalleryTestimonialPull from "@/components/gallery/GalleryTestimonialPull";
 import CTABanner from "@/components/sections/CTABanner";
-import { sanityFetch } from "@/sanity/lib/client";
 import { GALLERY_QUERY } from "@/sanity/lib/queries";
+import { sanityFetch } from "@/sanity/lib/live";
 
 export const metadata: Metadata = {
   title: "Gallery — Bellymenu Kitchen",
@@ -22,7 +22,13 @@ export const metadata: Metadata = {
 };
 
 export default async function GalleryPage() {
-  const items = await sanityFetch<GalleryItem[]>(GALLERY_QUERY);
+  // const items = await sanityFetch<GalleryItem[]>(GALLERY_QUERY);
+  
+  const [itemsResult] =
+  await Promise.all([
+    sanityFetch({ query: GALLERY_QUERY }),
+  ]);
+  const items = (itemsResult.data ?? []) as GalleryItem[];
   const totalCount = items?.length ?? 0;
 
   return (

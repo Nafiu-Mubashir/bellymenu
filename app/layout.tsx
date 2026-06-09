@@ -4,6 +4,7 @@ import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import FloatingWhatsApp from "@/components/ui/FloatingWhatsApp";
 import "./globals.css";
+import { SanityLive } from "@/sanity/lib/live";
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
@@ -45,6 +46,7 @@ export default function RootLayout({
       <body className="font-inter antialiased bg-white text-neutral-900 overflow-x-hidden">
         <Navbar />
         {children}
+        <SanityLive />
         <Footer />
         <FloatingWhatsApp phoneNumber={WHATSAPP_NUMBER} />
       </body>

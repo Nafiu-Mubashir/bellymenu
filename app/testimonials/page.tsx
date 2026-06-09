@@ -9,8 +9,8 @@ import PlatformRatings from "@/components/testimonials/PlatformRatings";
 import TestimonialsGrid from "@/components/testimonials/TestimonialsGrid";
 import LeaveReview from "@/components/testimonials/LeaveReview";
 import CTABanner from "@/components/sections/CTABanner";
-import { sanityFetch } from "@/sanity/lib/client";
 import { ALL_TESTIMONIALS_QUERY } from "@/sanity/lib/queries";
+import { sanityFetch } from "@/sanity/lib/live";
 
 export const metadata: Metadata = {
   title: "Client Reviews & Testimonials — Bellymenu Kitchen",
@@ -25,10 +25,15 @@ export const metadata: Metadata = {
 };
 
 export default async function TestimonialsPage() {
-  const testimonials = await sanityFetch<Testimonial[]>(ALL_TESTIMONIALS_QUERY);
+  // const testimonials = await sanityFetch<Testimonial[]>(ALL_TESTIMONIALS_QUERY);
+  const [testimonialsResult] = await Promise.all([
+    sanityFetch({ query: ALL_TESTIMONIALS_QUERY }),
+  ]);
+  const testimonials = (testimonialsResult.data ?? []) as Testimonial[];
 
   // Use the most recent review as the featured one (or null for fallback)
-  const featured = testimonials && testimonials.length > 0 ? testimonials[0] : null;
+  const featured =
+    testimonials && testimonials.length > 0 ? testimonials[0] : null;
 
   return (
     <main className="overflow-x-hidden">

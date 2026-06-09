@@ -1,10 +1,12 @@
 "use client";
+import Image from "next/image";
 
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { CheckCircle2, ChevronRight } from "lucide-react";
 import SectionHeading from "@/components/ui/SectionHeading";
 import type { AboutPillar } from "@/types";
+import { IMAGES } from "@/app/lib/images";
 
 const PILLARS: AboutPillar[] = [
   {
@@ -51,14 +53,20 @@ export default function AboutSection() {
             className="relative"
           >
             {/* Main card */}
-            <div className="relative bg-neutral-950 rounded-3xl overflow-hidden aspect-4/3 flex items-end">
+            <div className="relative bg-neutral-950 rounded-3xl overflow-hidden aspect-[4/3] flex items-end">
               {/* Decorative gradient */}
-              <div className="absolute inset-0 bg-linear-to-br from-green-900/30 via-neutral-950 to-neutral-950" />
-              <div className="absolute top-0 right-0 w-64 h-64 bg-green-600/20 rounded-full blur-3xl" />
-
-              {/* Content inside card */}
+              <div className="absolute inset-0 bg-gradient-to-br from-green-900/30 via-neutral-950 to-neutral-950" />
+              {/* Real photo */}
+              <Image
+                src={IMAGES.about.homepageCard}
+                alt="Bellymenu Kitchen team at work"
+                fill
+                className="object-cover opacity-60"
+                sizes="(max-width: 1024px) 100vw, 50vw"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-neutral-950/85 via-neutral-950/20 to-transparent" />
+              {/* Caption */}
               <div className="relative z-10 p-8 w-full">
-                <p className="font-playfair text-4xl md:text-5xl text-green-400 mb-2">🍛</p>
                 <h3 className="font-playfair text-2xl text-white font-semibold leading-snug mb-1">
                   Born from a love of<br />
                   <em className="not-italic text-green-400">Nigerian cuisine</em>
@@ -117,7 +125,7 @@ export default function AboutSection() {
                   transition={{ delay: i * 0.1 + 0.2, duration: 0.45 }}
                   className="flex items-start gap-4 p-4 rounded-xl border border-neutral-100 hover:border-green-200 hover:bg-green-50/40 transition-all duration-200"
                 >
-                  <div className="w-10 h-10 rounded-xl bg-green-50 flex items-center justify-center text-xl shrink-0">
+                  <div className="w-10 h-10 rounded-xl bg-green-50 flex items-center justify-center text-xl flex-shrink-0">
                     {pillar.icon}
                   </div>
                   <div>

@@ -5,6 +5,8 @@ import Link from "next/link";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { ChevronRight, MessageCircle, ArrowDown } from "lucide-react";
 import type { HomepageData, StatItem } from "@/types";
+import { IMAGES } from "@/app/lib/images";
+import Image from "next/image";
 
 // ─── Fallback data ────────────────────────────────────────────────────────────
 const FALLBACK: HomepageData = {
@@ -32,7 +34,9 @@ function StatCard({ stat, index }: { stat: StatItem; index: number }) {
     >
       <p className="font-playfair text-3xl md:text-4xl font-semibold text-white leading-none">
         {stat.value}
-        <span className="text-green-400 text-2xl md:text-3xl">{stat.suffix}</span>
+        <span className="text-green-400 text-2xl md:text-3xl">
+          {stat.suffix}
+        </span>
       </p>
       <p className="text-[11px] tracking-widest uppercase text-white/40 mt-1.5 font-light">
         {stat.label}
@@ -46,9 +50,12 @@ interface HeroSectionProps {
 }
 
 export default function HeroSection({ data }: HeroSectionProps) {
-  const d = data ?? FALLBACK;
+  const d = {
+    ...FALLBACK,
+    ...(data || {}),
+  };
   const containerRef = useRef<HTMLDivElement>(null);
-
+  const heroStats = d.heroStats ?? FALLBACK.heroStats;
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end start"],
@@ -57,35 +64,40 @@ export default function HeroSection({ data }: HeroSectionProps) {
   const blobY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
   const contentOpacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
   const contentY = useTransform(scrollYProgress, [0, 0.5], ["0%", "8%"]);
+    const imgY = useTransform(scrollYProgress, [0, 1], ["0%", "20%"]);
 
-  const WHATSAPP_NUMBER = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "2348012345678";
+  const WHATSAPP_NUMBER =
+    process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "2348012345678";
 
   return (
     <section
       ref={containerRef}
       className="relative min-h-screen flex flex-col justify-center overflow-hidden bg-neutral-950 w-full"
     >
+     {/* ── Real background photo with parallax ── */}
+      <motion.div style={{ y: imgY }} className="absolute inset-0 z-0">
+        <Image
+          src={IMAGES.hero.homepage}
+          alt=""
+          fill
+          className="object-cover object-center"
+          priority
+          sizes="100vw"
+        />
+        {/* Dark gradient overlay — keeps text readable */}
+        <div className="absolute inset-0 bg-neutral-950/70" />
+        <div className="absolute inset-0 bg-gradient-to-b from-neutral-950/40 via-neutral-950/20 to-neutral-950/80" />
+      </motion.div>
+
+      {/* Green colour tint orbs */}
       <motion.div
         style={{ y: blobY }}
-        className="pointer-events-none absolute -top-32 -right-32 w-[600px] h-[600px] rounded-full bg-green-600/20 blur-[120px]"
+        className="pointer-events-none absolute -top-32 -right-32 w-[600px] h-[600px] rounded-full bg-green-600/15 blur-[120px] z-10"
         aria-hidden="true"
       />
       <motion.div
         style={{ y: blobY }}
-        className="pointer-events-none absolute bottom-0 -left-40 w-[500px] h-[500px] rounded-full bg-emerald-500/10 blur-[100px]"
-        aria-hidden="true"
-      />
-      <div
-        className="pointer-events-none absolute inset-0 opacity-[0.03]"
-        style={{
-          backgroundImage:
-            "linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)",
-          backgroundSize: "60px 60px",
-        }}
-        aria-hidden="true"
-      />
-      <div
-        className="pointer-events-none absolute inset-0 bg-gradient-to-b from-neutral-950/60 via-transparent to-neutral-950/80"
+        className="pointer-events-none absolute bottom-0 -left-40 w-[500px] h-[500px] rounded-full bg-emerald-500/8 blur-[100px] z-10"
         aria-hidden="true"
       />
 
@@ -112,11 +124,9 @@ export default function HeroSection({ data }: HeroSectionProps) {
             transition={{ duration: 0.7, delay: 0.15 }}
             className="font-playfair text-[clamp(2.8rem,7vw,5.5rem)] font-semibold text-white leading-[1.04] tracking-tight mb-6"
           >
-            {d.heroTitle}{" "}
-            {/* <br className="hidden sm:block" /> */}
+            {d.heroTitle} {/* <br className="hidden sm:block" /> */}
             <em className="not-italic text-green-400">{d.heroTitleAccent}</em>
-            <br className="hidden sm:block" />
-            {" "}Unforgettable
+            <br className="hidden sm:block" /> Unforgettable
           </motion.h1>
 
           <motion.p
@@ -139,7 +149,10 @@ export default function HeroSection({ data }: HeroSectionProps) {
               className="group inline-flex items-center gap-2 bg-green-600 hover:bg-green-500 text-white px-7 py-3.5 rounded-full text-sm font-semibold tracking-wide transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-green-900/40"
             >
               Request a Quote
-              <ChevronRight size={16} className="transition-transform group-hover:translate-x-1" />
+              <ChevronRight
+                size={16}
+                className="transition-transform group-hover:translate-x-1"
+              />
             </Link>
             <a
               href={`https://wa.me/${WHATSAPP_NUMBER}`}
@@ -160,7 +173,7 @@ export default function HeroSection({ data }: HeroSectionProps) {
         </div>
 
         <div className="mt-16 md:mt-24 grid grid-cols-2 sm:grid-cols-4 gap-8 max-w-xl">
-          {(d.heroStats.length > 0 ? d.heroStats : FALLBACK.heroStats).map((stat, i) => (
+          {heroStats.map((stat, i) => (
             <StatCard key={stat.label} stat={stat} index={i} />
           ))}
         </div>
@@ -173,7 +186,9 @@ export default function HeroSection({ data }: HeroSectionProps) {
         className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-1.5 text-white/30"
         aria-hidden="true"
       >
-        <span className="text-[10px] tracking-widest uppercase font-light">Scroll</span>
+        <span className="text-[10px] tracking-widest uppercase font-light">
+          Scroll
+        </span>
         <motion.div
           animate={{ y: [0, 5, 0] }}
           transition={{ repeat: Infinity, duration: 1.6, ease: "easeInOut" }}

@@ -7,9 +7,9 @@ import MenuCatalogue from "@/components/menu/MenuCatalogue";
 import FoodGalleryGrid from "@/components/menu/FoodGalleryGrid";
 import MenuCustomNote from "@/components/menu/MenuCustomNote";
 import CTABanner from "@/components/sections/CTABanner";
-import { sanityFetch } from "@/sanity/lib/client";
 import { MENU_QUERY, GALLERY_PREVIEW_QUERY } from "@/sanity/lib/queries";
 import { GalleryItem, MenuCategoryExtended } from "@/types";
+import { sanityFetch } from "@/sanity/lib/live";
 
 export const metadata: Metadata = {
   title: "Our Menu — Bellymenu Kitchen",
@@ -25,10 +25,17 @@ export const metadata: Metadata = {
 
 // Parallel server fetches — both fall back gracefully if Sanity is not connected
 export default async function MenuPage() {
-  const [categories, galleryItems] = await Promise.all([
-    sanityFetch<MenuCategoryExtended[]>(MENU_QUERY),
-    sanityFetch<GalleryItem[]>(GALLERY_PREVIEW_QUERY),
-  ]);
+  // const [categories, galleryItems] = await Promise.all([
+  //   sanityFetch<MenuCategoryExtended[]>(MENU_QUERY),
+  //   sanityFetch<GalleryItem[]>(GALLERY_PREVIEW_QUERY),
+  // ]);
+  const [categoriesResult, galleryItemsResult] =
+      await Promise.all([
+        sanityFetch({ query: MENU_QUERY }),
+        sanityFetch({ query: GALLERY_PREVIEW_QUERY }),
+      ]);
+      const categories = (categoriesResult.data ?? []) as MenuCategoryExtended[];
+      const galleryItems = (galleryItemsResult.data ?? []) as GalleryItem[];
 
   return (
     <main className="overflow-x-hidden">

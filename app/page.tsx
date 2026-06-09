@@ -18,7 +18,7 @@ import AboutSection from "@/components/sections/AboutSection";
 import TestimonialsSection from "@/components/sections/TestimonialsSection";
 import GalleryPreview from "@/components/sections/GalleryPreview";
 import CTABanner from "@/components/sections/CTABanner";
-import { sanityFetch } from "@/sanity/lib/client";
+import { sanityFetch } from "@/sanity/lib/live";
 
 export const metadata = {
   title: "Bellymenu Kitchen — Premium Catering Services in Nigeria",
@@ -37,13 +37,18 @@ export const metadata = {
 // If any fetch fails, it returns null — each component falls back to its
 // own hardcoded data so the page always renders correctly.
 export default async function HomePage() {
-  const [homepageData, services, testimonials, galleryItems] =
-    await Promise.all([
-      sanityFetch<HomepageData>(HOMEPAGE_QUERY),
-      sanityFetch<Service[]>(SERVICES_QUERY),
-      sanityFetch<Testimonial[]>(TESTIMONIALS_QUERY),
-      sanityFetch<GalleryItem[]>(GALLERY_PREVIEW_QUERY),
-    ]);
+ const [homepageResult, servicesResult, testimonialsResult, galleryResult] =
+  await Promise.all([
+    sanityFetch({ query: HOMEPAGE_QUERY }),
+    sanityFetch({ query: SERVICES_QUERY }),
+    sanityFetch({ query: TESTIMONIALS_QUERY }),
+    sanityFetch({ query: GALLERY_PREVIEW_QUERY }),
+  ]);
+// (rawStatsRes.data ?? []) as SanityKeyStatistic[]
+const homepageData = (homepageResult.data ?? []) as HomepageData;
+const services = (servicesResult.data ?? []) as Service[];
+const testimonials = (testimonialsResult.data ?? []) as Testimonial[];
+const galleryItems = (galleryResult.data ?? []) as GalleryItem[];
 
   return (
     <main>

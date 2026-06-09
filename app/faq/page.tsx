@@ -4,8 +4,8 @@ import FAQHero from "@/components/faq/FAQHero";
 import FAQAccordion from "@/components/faq/FAQAccordion";
 import FAQContactCTA from "@/components/faq/FAQContactCTA";
 import CTABanner from "@/components/sections/CTABanner";
-import { sanityFetch } from "@/sanity/lib/client";
 import { FAQ_QUERY } from "@/sanity/lib/queries";
+import { sanityFetch } from "@/sanity/lib/live";
 
 export const metadata: Metadata = {
   title: "FAQ — Bellymenu Kitchen",
@@ -20,7 +20,12 @@ export const metadata: Metadata = {
 };
 
 export default async function FAQPage() {
-  const faqs = await sanityFetch<FAQItem[]>(FAQ_QUERY);
+  // const faqs = await sanityFetch<FAQItem[]>(FAQ_QUERY);
+  const [faqsResult] =
+    await Promise.all([
+      sanityFetch({ query: FAQ_QUERY }),
+    ]);
+    const faqs = (faqsResult.data ?? []) as FAQItem[];
 
   return (
     <main className="overflow-x-hidden">

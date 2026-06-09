@@ -6,8 +6,8 @@ import ServicesGrid from "@/components/services/ServicesGrid";
 import HowItWorks from "@/components/services/HowItWorks";
 import ServicesWhyUs from "@/components/services/ServicesWhyUs";
 import CTABanner from "@/components/sections/CTABanner";
-import { sanityFetch } from "@/sanity/lib/client";
 import { ALL_SERVICES_QUERY } from "@/sanity/lib/queries";
+import { sanityFetch } from "@/sanity/lib/live";
 
 export const metadata: Metadata = {
   title: "Our Services — Catering for Every Occasion | Bellymenu Kitchen",
@@ -22,7 +22,11 @@ export const metadata: Metadata = {
 };
 
 export default async function ServicesPage() {
-  const services = await sanityFetch<Service[]>(ALL_SERVICES_QUERY);
+   const [servicesResult] =
+    await Promise.all([
+      sanityFetch({ query: ALL_SERVICES_QUERY }),
+    ]);
+  const services = (servicesResult.data ?? []) as Service[];
 
   return (
     <main className="overflow-x-hidden">

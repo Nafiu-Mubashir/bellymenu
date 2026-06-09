@@ -1,7 +1,9 @@
 "use client";
 
+import Image from "next/image";
 import { motion } from "framer-motion";
 import type { AboutData } from "@/types";
+import { IMAGES } from "@/app/lib/images";
 
 interface OurStoryProps {
   data: AboutData | null;
@@ -25,7 +27,7 @@ export default function OurStory({ data }: OurStoryProps) {
       <div className="mx-auto max-w-7xl px-5 md:px-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-start">
 
-          {/* ── Left: story text ── */}
+          {/* Left: story text */}
           <motion.div
             initial={{ opacity: 0, x: -28 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -58,7 +60,7 @@ export default function OurStory({ data }: OurStoryProps) {
             </div>
           </motion.div>
 
-          {/* ── Right: mission card + decorative visual ── */}
+          {/* Right: photo card + mission */}
           <motion.div
             initial={{ opacity: 0, x: 28 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -66,17 +68,24 @@ export default function OurStory({ data }: OurStoryProps) {
             transition={{ duration: 0.65, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
             className="lg:sticky lg:top-28 space-y-6"
           >
-            {/* Decorative photo card */}
-            <div className="relative bg-neutral-950 rounded-3xl overflow-hidden h-64 flex items-end">
-              <div className="absolute inset-0 bg-gradient-to-br from-green-900/30 to-neutral-950" />
-              <div className="absolute top-5 right-5 w-32 h-32 rounded-full bg-green-500/20 blur-2xl" />
-              <div className="absolute bottom-8 left-8 right-8 relative z-10">
-                <p className="font-playfair text-5xl mb-3">🍛</p>
+            {/* Real photo card */}
+            <div className="relative rounded-3xl overflow-hidden h-72 shadow-xl">
+              <Image
+                src={IMAGES.about.kitchenCard}
+                alt="Bellymenu Kitchen chefs at work"
+                fill
+                className="object-cover"
+                sizes="(max-width: 1024px) 100vw, 50vw"
+              />
+              {/* Dark overlay for text */}
+              <div className="absolute inset-0 bg-gradient-to-t from-neutral-950/80 via-neutral-950/20 to-transparent" />
+              {/* Caption */}
+              <div className="absolute bottom-6 left-7 right-7">
                 <p className="font-playfair text-xl text-white font-semibold leading-snug">
-                  "Every plate tells a<br />
-                  <em className="not-italic text-green-400">story worth sharing."</em>
+                 {` "Every plate tells a`}<br />
+                  <em className="not-italic text-green-400">{`story worth sharing."`}</em>
                 </p>
-                <p className="text-xs text-white/35 font-light mt-2 tracking-wide">
+                <p className="text-xs text-white/45 font-light mt-2 tracking-wide">
                   — Founder, Bellymenu Kitchen
                 </p>
               </div>

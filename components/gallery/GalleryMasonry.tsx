@@ -10,7 +10,7 @@ import GalleryFilter, {
   type GalleryCategoryId,
 } from "./GalleryFilter";
 import GalleryLightbox from "./GalleryLightbox";
-import { urlFor } from "@/sanity/lib/client";
+import { urlFor } from "@/sanity/lib/image";
 
 // ─── Rich fallback tiles ──────────────────────────────────────────────────────
 const FALLBACK_TILES = [
@@ -52,7 +52,7 @@ function RealTile({
   index: number;
   onClick: () => void;
 }) {
-  const src = urlFor(item.image);
+  const src = urlFor(item.image).url();
   const height = getHeight(index);
 
   return (

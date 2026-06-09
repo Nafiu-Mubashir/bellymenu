@@ -5,7 +5,7 @@ import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, ChevronLeft, ChevronRight, ZoomIn } from "lucide-react";
 import type { GalleryItem } from "@/types";
-import { urlFor } from "@/sanity/lib/client";
+import { urlFor } from "@/sanity/lib/image";
 
 // ─── Fallback placeholder tiles ───────────────────────────────────────────────
 const FALLBACK_TILES = [
@@ -128,7 +128,7 @@ function Lightbox({ tiles, currentIndex, onClose, onNext, onPrev }: LightboxProp
 
 // ─── Real image tile (when Sanity data exists) ────────────────────────────────
 function RealTile({ item, onClick }: { item: GalleryItem; onClick: () => void }) {
-  const src = urlFor(item.image);
+  const src = urlFor(item.image).url();
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.97 }}

@@ -3,18 +3,20 @@
 import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { ArrowRight, ImageOff } from "lucide-react";
-import type { GalleryItem } from "@/types";
-import { urlFor } from "@/sanity/lib/client";
+import { ArrowRight } from "lucide-react";
 
-// ─── Fallback placeholder items ───────────────────────────────────────────────
-// When Sanity images aren't available, we show tasteful placeholder tiles
+import type { GalleryItem } from "@/types";
+import { IMAGES } from "@/app/lib/images";
+import { urlFor } from "@/sanity/lib/image";
+
+// ─── Fallback stock-photo tiles ───────────────────────────────────────────────
+// Real Unsplash photos — shown until galleryItem docs are added in Sanity.
 const FALLBACK_ITEMS = [
-  { _id: "1", title: "Wedding Banquet", category: "wedding", emoji: "🍽️", bg: "bg-green-50" },
-  { _id: "2", title: "Nigerian Cuisine", category: "food", emoji: "🥘", bg: "bg-amber-50" },
-  { _id: "3", title: "Corporate Setup", category: "corporate", emoji: "🏢", bg: "bg-slate-50" },
-  { _id: "4", title: "Celebration Cake", category: "party", emoji: "🎂", bg: "bg-rose-50" },
-  { _id: "5", title: "Outdoor Event", category: "setup", emoji: "🌿", bg: "bg-emerald-50" },
+  { _id: "1", title: "Wedding Banquet",   category: "wedding",   img: IMAGES.gallery.wedding1   },
+  { _id: "2", title: "Nigerian Cuisine",  category: "food",      img: IMAGES.gallery.food1      },
+  { _id: "3", title: "Corporate Dinner",  category: "corporate", img: IMAGES.gallery.corporate1 },
+  { _id: "4", title: "Celebration Setup", category: "party",     img: IMAGES.gallery.party1     },
+  { _id: "5", title: "Outdoor Event",     category: "setup",     img: IMAGES.gallery.outdoor1   },
 ];
 
 const CATEGORY_LABELS: Record<string, string> = {
@@ -25,7 +27,7 @@ const CATEGORY_LABELS: Record<string, string> = {
   setup: "Setup",
 };
 
-// ─── Real image tile ──────────────────────────────────────────────────────────
+// ─── Real Sanity image tile ───────────────────────────────────────────────────
 function GalleryTile({
   item,
   index,
@@ -35,7 +37,7 @@ function GalleryTile({
   index: number;
   large?: boolean;
 }) {
-  const src = urlFor(item.image);
+  const src = urlFor(item.image).url();
 
   return (
     <motion.div
@@ -43,9 +45,9 @@ function GalleryTile({
       whileInView={{ opacity: 1, scale: 1 }}
       viewport={{ once: true, amount: 0.2 }}
       transition={{ delay: index * 0.07, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-      className={`relative overflow-hidden rounded-2xl ${large ? "row-span-2" : ""} group cursor-pointer`}
+      className={`relative overflow-hidden rounded-2xl ${large ? "row-span-2" : ""} group cursor-pointer bg-neutral-100`}
     >
-      {src ? (
+      {src && (
         <Image
           src={src}
           alt={item.image.alt ?? item.title}
@@ -53,13 +55,7 @@ function GalleryTile({
           sizes={large ? "(max-width: 768px) 100vw, 50vw" : "(max-width: 768px) 50vw, 25vw"}
           className="object-cover transition-transform duration-500 group-hover:scale-105"
         />
-      ) : (
-        // Placeholder when no Sanity image yet
-        <div className="absolute inset-0 bg-neutral-100 flex items-center justify-center">
-          <ImageOff size={24} className="text-neutral-300" />
-        </div>
       )}
-      {/* Overlay */}
       <div className="absolute inset-0 bg-neutral-950/0 group-hover:bg-neutral-950/40 transition-all duration-300" />
       <div className="absolute bottom-0 left-0 right-0 p-4 translate-y-2 opacity-0 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
         <span className="text-[10px] tracking-widest uppercase text-white/70 font-medium bg-white/10 backdrop-blur-sm px-2.5 py-1 rounded-full">
@@ -71,8 +67,8 @@ function GalleryTile({
   );
 }
 
-// ─── Placeholder tile (no Sanity data yet) ────────────────────────────────────
-function PlaceholderTile({
+// ─── Stock photo fallback tile ────────────────────────────────────────────────
+function StockTile({
   item,
   index,
   large = false,
@@ -87,17 +83,26 @@ function PlaceholderTile({
       whileInView={{ opacity: 1, scale: 1 }}
       viewport={{ once: true }}
       transition={{ delay: index * 0.07, duration: 0.5 }}
-      className={`relative overflow-hidden rounded-2xl ${
-        large ? "row-span-2" : ""
-      } ${item.bg} group cursor-pointer flex items-center justify-center min-h-45`}
+      className={`relative overflow-hidden rounded-2xl ${large ? "row-span-2" : ""} group cursor-pointer bg-neutral-200`}
     >
-      <div className="text-center transition-transform duration-300 group-hover:scale-110">
-        <span className="text-5xl block mb-2">{item.emoji}</span>
-        <span className="text-xs font-medium text-neutral-400 tracking-wider uppercase">
-          {item.title}
+      <Image
+        src={item.img}
+        alt={item.title}
+        fill
+        sizes={large ? "(max-width: 768px) 100vw, 50vw" : "(max-width: 768px) 50vw, 25vw"}
+        className="object-cover transition-transform duration-500 group-hover:scale-105"
+      />
+      {/* Permanent subtle overlay for branding */}
+      <div className="absolute inset-0 bg-neutral-950/20" />
+      {/* Hover overlay */}
+      <div className="absolute inset-0 bg-neutral-950/0 group-hover:bg-neutral-950/35 transition-all duration-300" />
+      {/* Caption on hover */}
+      <div className="absolute bottom-0 left-0 right-0 p-4 translate-y-2 opacity-0 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
+        <span className="text-[10px] tracking-widest uppercase text-white/70 font-medium bg-white/10 backdrop-blur-sm px-2.5 py-1 rounded-full">
+          {item.category}
         </span>
+        <p className="text-sm font-semibold text-white mt-1.5">{item.title}</p>
       </div>
-      <div className="absolute inset-0 bg-neutral-950/0 group-hover:bg-neutral-950/10 transition-all duration-300 rounded-2xl" />
     </motion.div>
   );
 }
@@ -145,9 +150,9 @@ export default function GalleryPreview({ items }: GalleryPreviewProps) {
             </>
           ) : (
             <>
-              <PlaceholderTile item={FALLBACK_ITEMS[0]} index={0} large />
+              <StockTile item={FALLBACK_ITEMS[0]} index={0} large />
               {FALLBACK_ITEMS.slice(1).map((item, i) => (
-                <PlaceholderTile key={item._id} item={item} index={i + 1} />
+                <StockTile key={item._id} item={item} index={i + 1} />
               ))}
             </>
           )}

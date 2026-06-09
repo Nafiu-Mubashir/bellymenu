@@ -57,7 +57,7 @@ export default function ServicesWhyUs() {
             </h2>
 
             <p className="text-white/50 font-light leading-relaxed mb-10 text-sm md:text-[15px] max-w-md">
-              Eight years of refining every detail — from sourcing to service. Here's what you always get when you choose Bellymenu Kitchen.
+              {`Eight years of refining every detail — from sourcing to service. Here's what you always get when you choose Bellymenu Kitchen.`}
             </p>
 
             {/* Stats row */}

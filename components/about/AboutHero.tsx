@@ -1,7 +1,11 @@
 "use client";
 
+import Link from "next/link";
 import { motion } from "framer-motion";
+import HeroBackground from "@/components/ui/HeroBackground";
 import type { AboutData } from "@/types";
+import { ChevronRight } from "lucide-react";
+import { IMAGES } from "@/app/lib/images";
 
 interface AboutHeroProps {
   data: AboutData | null;
@@ -14,14 +18,22 @@ export default function AboutHero({ data }: AboutHeroProps) {
   const tagline = data?.tagline ?? FALLBACK_TAGLINE;
 
   return (
-    <section className="relative min-h-[60vh] flex items-end overflow-hidden bg-neutral-950 pt-24 pb-20 md:pb-28">
-      {/* Decorative blobs */}
-      <div className="pointer-events-none absolute -top-20 -right-20 w-[500px] h-[500px] rounded-full bg-green-600/15 blur-[110px]" aria-hidden="true" />
-      <div className="pointer-events-none absolute bottom-0 -left-32 w-[400px] h-[400px] rounded-full bg-emerald-700/10 blur-[90px]" aria-hidden="true" />
+    <section className="relative min-h-[65vh] flex items-end overflow-hidden bg-neutral-950 pt-24 pb-20 md:pb-28">
+      {/* Real hero photo */}
+      <HeroBackground
+        src={IMAGES.hero.about}
+        overlayOpacity={0.70}
+        greenTint={0.06}
+        priority
+      />
 
-      {/* Grid texture */}
+      {/* Decorative blobs — sit on top of photo */}
+      <div className="pointer-events-none absolute -top-20 -right-20 w-[500px] h-[500px] rounded-full bg-green-600/12 blur-[110px] z-10" aria-hidden="true" />
+      <div className="pointer-events-none absolute bottom-0 -left-32 w-[400px] h-[400px] rounded-full bg-emerald-700/8 blur-[90px] z-10" aria-hidden="true" />
+
+      {/* Fine grid texture */}
       <div
-        className="pointer-events-none absolute inset-0 opacity-[0.025]"
+        className="pointer-events-none absolute inset-0 opacity-[0.025] z-10"
         style={{
           backgroundImage:
             "linear-gradient(#fff 1px,transparent 1px),linear-gradient(90deg,#fff 1px,transparent 1px)",
@@ -29,20 +41,20 @@ export default function AboutHero({ data }: AboutHeroProps) {
         }}
         aria-hidden="true"
       />
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-neutral-950/50 via-transparent to-neutral-950/70" aria-hidden="true" />
 
-      <div className="relative z-10 mx-auto max-w-7xl w-full px-5 md:px-10">
+      <div className="relative z-20 mx-auto max-w-7xl w-full px-5 md:px-10">
         {/* Breadcrumb */}
-        {/* <motion.div
+        <motion.nav
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="flex items-center gap-2 text-xs text-white/30 font-light tracking-wider mb-8"
+          className="flex items-center gap-2 text-xs text-white/30 font-medium tracking-wide mb-8"
+          aria-label="Breadcrumb"
         >
-          <span>Home</span>
-          <span>/</span>
-          <span className="text-green-400">About Us</span>
-        </motion.div> */}
+          <Link href="/" className="hover:text-white/60 transition-colors">Home</Link>
+          <ChevronRight size={11} className="opacity-50" />
+          <span className="text-white/60">About Us</span>
+        </motion.nav>
 
         <div className="max-w-3xl">
           {/* Eyebrow */}
@@ -75,7 +87,7 @@ export default function AboutHero({ data }: AboutHeroProps) {
             initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.55, delay: 0.22 }}
-            className="text-base md:text-lg text-white/50 font-light leading-relaxed max-w-xl"
+            className="text-base md:text-lg text-white/55 font-light leading-relaxed max-w-xl"
           >
             {tagline}
           </motion.p>
@@ -86,7 +98,7 @@ export default function AboutHero({ data }: AboutHeroProps) {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1 }}
-          className="absolute bottom-8 right-10 hidden md:flex items-center gap-2 text-white/20"
+          className="absolute bottom-8 right-10 hidden md:flex items-center gap-2 text-white/25"
           aria-hidden="true"
         >
           <span className="text-[10px] tracking-widest uppercase font-light">Scroll to explore</span>

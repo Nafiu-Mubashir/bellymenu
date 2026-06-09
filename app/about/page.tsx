@@ -9,9 +9,9 @@ import MilestonesSection from "@/components/about/MilestonesSection";
 import TeamSection from "@/components/about/TeamSection";
 import WhyChooseUs from "@/components/about/WhyChooseUs";
 import CTABanner from "@/components/sections/CTABanner";
-import { sanityFetch } from "@/sanity/lib/client";
 import { AboutData } from "@/types";
 import { ABOUT_QUERY } from "@/sanity/lib/queries";
+import { sanityFetch } from "@/sanity/lib/live";
 
 export const metadata: Metadata = {
   title: "About Us",
@@ -27,7 +27,13 @@ export const metadata: Metadata = {
 
 // Server Component — fetches About data, falls back gracefully
 export default async function AboutPage() {
-  const aboutData = await sanityFetch<AboutData>(ABOUT_QUERY);
+  // const aboutData = await sanityFetch<AboutData>(ABOUT_QUERY);
+   const [aboutDataResult] =
+      await Promise.all([
+        sanityFetch({ query: ABOUT_QUERY }),
+      ]);
+    const aboutData = (aboutDataResult.data ?? []) as AboutData;
+  
 
   return (
     <main className="overflow-x-hidden">

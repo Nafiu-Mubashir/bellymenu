@@ -5,7 +5,7 @@ import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, ChevronLeft, ChevronRight, Download, Share2 } from "lucide-react";
 import type { GalleryItem } from "@/types";
-import { urlFor } from "@/sanity/lib/client";
+import { urlFor } from "@/sanity/lib/image";
 
 interface FallbackTile {
   _id: string;
@@ -68,7 +68,7 @@ export default function GalleryLightbox({
   if (!current) return null;
 
   const isReal = isRealItem(current);
-  const imgSrc = isReal ? urlFor((current as GalleryItem).image) : null;
+  const imgSrc = isReal ? urlFor((current as GalleryItem).image).url() : null;
   const categoryLabel = CATEGORY_LABELS[current.category] ?? current.category;
 
   return (
