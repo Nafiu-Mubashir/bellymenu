@@ -13,6 +13,7 @@ import {
   SERVICE_DETAIL_QUERY,
 } from "@/sanity/lib/queries";
 import { sanityFetch } from "@/sanity/lib/live";
+import { client } from "@/sanity/lib/client";
 
 // ─── Full fallback data keyed by slug ─────────────────────────────────────────
 const FALLBACK_SERVICES: Record<string, ServiceDetail> = {
@@ -935,33 +936,29 @@ const FALLBACK_SERVICES: Record<string, ServiceDetail> = {
 };
 
 interface PageProps {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 }
 
 export async function generateStaticParams() {
-  const { data } = await sanityFetch({
-    query: SERVICE_SLUGS_QUERY,
-  });
+  try {
+    const slugs = await client.fetch<{ slug: string }[]>(SERVICE_SLUGS_QUERY);
 
-  const slugs = data as { slug: string }[] | null;
-
-  if (slugs?.length) {
-    return slugs.map((s) => ({
-      slug: s.slug,
-    }));
+    if (slugs?.length) {
+      return slugs.map((s) => ({ slug: s.slug }));
+    }
+  } catch {
+    // fall through to fallback
   }
 
-  return Object.keys(FALLBACK_SERVICES).map((slug) => ({
-    slug,
-  }));
+  return Object.keys(FALLBACK_SERVICES).map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
-  const { slug } = params;
+ const { slug } = await params;  // add await
 
   const { data } = await sanityFetch({
     query: SERVICE_DETAIL_QUERY,

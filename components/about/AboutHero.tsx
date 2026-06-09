@@ -28,8 +28,8 @@ export default function AboutHero({ data }: AboutHeroProps) {
       />
 
       {/* Decorative blobs — sit on top of photo */}
-      <div className="pointer-events-none absolute -top-20 -right-20 w-[500px] h-[500px] rounded-full bg-green-600/12 blur-[110px] z-10" aria-hidden="true" />
-      <div className="pointer-events-none absolute bottom-0 -left-32 w-[400px] h-[400px] rounded-full bg-emerald-700/8 blur-[90px] z-10" aria-hidden="true" />
+      <div className="pointer-events-none absolute -top-20 -right-20 w-125 h-125 rounded-full bg-green-600/12 blur-[110px] z-10" aria-hidden="true" />
+      <div className="pointer-events-none absolute bottom-0 -left-32 w-100 h-100 rounded-full bg-emerald-700/8 blur-[90px] z-10" aria-hidden="true" />
 
       {/* Fine grid texture */}
       <div

@@ -78,7 +78,7 @@ export default function OurStory({ data }: OurStoryProps) {
                 sizes="(max-width: 1024px) 100vw, 50vw"
               />
               {/* Dark overlay for text */}
-              <div className="absolute inset-0 bg-gradient-to-t from-neutral-950/80 via-neutral-950/20 to-transparent" />
+              <div className="absolute inset-0 bg-linear-to-t from-neutral-950/80 via-neutral-950/20 to-transparent" />
               {/* Caption */}
               <div className="absolute bottom-6 left-7 right-7">
                 <p className="font-playfair text-xl text-white font-semibold leading-snug">

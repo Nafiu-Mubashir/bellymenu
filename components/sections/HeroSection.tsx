@@ -86,7 +86,7 @@ export default function HeroSection({ data }: HeroSectionProps) {
         />
         {/* Dark gradient overlay — keeps text readable */}
         <div className="absolute inset-0 bg-neutral-950/70" />
-        <div className="absolute inset-0 bg-gradient-to-b from-neutral-950/40 via-neutral-950/20 to-neutral-950/80" />
+        <div className="absolute inset-0 bg-linear-to-b from-neutral-950/40 via-neutral-950/20 to-neutral-950/80" />
       </motion.div>
 
       {/* Green colour tint orbs */}
@@ -97,7 +97,7 @@ export default function HeroSection({ data }: HeroSectionProps) {
       />
       <motion.div
         style={{ y: blobY }}
-        className="pointer-events-none absolute bottom-0 -left-40 w-[500px] h-[500px] rounded-full bg-emerald-500/8 blur-[100px] z-10"
+        className="pointer-events-none absolute bottom-0 -left-40 w-125 h-125 rounded-full bg-emerald-500/8 blur-[100px] z-10"
         aria-hidden="true"
       />
 

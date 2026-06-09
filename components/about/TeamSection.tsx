@@ -43,12 +43,12 @@ const STOCK_HEADSHOTS = [
   IMAGES.team.clientRel,
 ];
 
-const AVATAR_RING_COLORS = [
-  "ring-green-500/40",
-  "ring-emerald-500/40",
-  "ring-teal-500/40",
-  "ring-green-400/40",
-];
+// const AVATAR_RING_COLORS = [
+//   "ring-green-500/40",
+//   "ring-emerald-500/40",
+//   "ring-teal-500/40",
+//   "ring-green-400/40",
+// ];
 
 export default function TeamSection({
   members,
@@ -120,7 +120,7 @@ export default function TeamSection({
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                   />
                   {/* Bottom gradient for smooth card transition */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-neutral-950/70 via-neutral-950/10 to-transparent" />
+                  <div className="absolute inset-0 bg-linear-to-t from-neutral-950/70 via-neutral-950/10 to-transparent" />
 
                   {/* Stock photo watermark — remove once real photos are added */}
                   {!sanityUrl && (

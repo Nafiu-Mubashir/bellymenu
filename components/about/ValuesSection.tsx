@@ -1,63 +1,72 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { Leaf, Handshake, Trophy, Globe, Recycle, Sparkles } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 
 interface Value {
-  icon: string;
+  icon: LucideIcon;
   title: string;
   description: string;
   color: string;
   lightColor: string;
+  iconColor: string;
 }
 
 const VALUES: Value[] = [
   {
-    icon: "🌿",
+    icon: Leaf,
     title: "Fresh Every Time",
     description:
       "We source ingredients locally and prepare everything fresh on the day. No freezers, no shortcuts — just honest, quality food.",
     color: "text-green-700",
     lightColor: "bg-green-50 border-green-100",
+    iconColor: "text-green-600",
   },
   {
-    icon: "🤝",
+    icon: Handshake,
     title: "People First",
     description:
       "We see every client as a partner, not just a booking. Your vision drives everything we do — from menu design to the last plate cleared.",
     color: "text-blue-700",
     lightColor: "bg-blue-50 border-blue-100",
+    iconColor: "text-blue-600",
   },
   {
-    icon: "🏆",
+    icon: Trophy,
     title: "Excellence in Detail",
     description:
       "The difference between good and outstanding is in the details. We obsess over presentation, timing, temperature, and service quality.",
     color: "text-amber-700",
     lightColor: "bg-amber-50 border-amber-100",
+    iconColor: "text-amber-600",
   },
   {
-    icon: "🌍",
+    icon: Globe,
     title: "Proudly Nigerian",
     description:
       "We celebrate Nigerian culinary heritage in everything we cook. Our menus honour local ingredients, traditional techniques, and bold flavours.",
     color: "text-emerald-700",
     lightColor: "bg-emerald-50 border-emerald-100",
+    iconColor: "text-emerald-600",
   },
   {
-    icon: "♻️",
+    icon: Recycle,
     title: "Sustainable Practices",
     description:
       "We minimise waste, support local farmers and suppliers, and are committed to sustainable sourcing across all our menus.",
     color: "text-teal-700",
     lightColor: "bg-teal-50 border-teal-100",
+    iconColor: "text-teal-600",
   },
   {
-    icon: "✨",
+    icon: Sparkles,
     title: "Joy in Every Bite",
     description:
       "Ultimately we are in the business of joy. When your guests leave full, satisfied and talking about the food — that's our win.",
     color: "text-purple-700",
     lightColor: "bg-purple-50 border-purple-100",
+    iconColor: "text-purple-600",
   },
 ];
 
@@ -84,35 +93,40 @@ export default function ValuesSection() {
             <em className="not-italic text-green-600">By</em>
           </h2>
           <p className="text-neutral-500 font-light leading-relaxed text-[15px]">
-            These aren't just words on a wall — they're the principles our team lives by in every kitchen, at every event.
+            {`These aren't just words on a wall — they're the principles our team lives by in every kitchen, at every event.`}
           </p>
         </motion.div>
 
         {/* Values grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          {VALUES.map((value, i) => (
-            <motion.div
-              key={value.title}
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.2 }}
-              transition={{ delay: i * 0.08, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-              className={`group relative border rounded-2xl p-7 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg ${value.lightColor}`}
-            >
-              {/* Icon */}
-              <div className="text-3xl mb-5">{value.icon}</div>
+          {VALUES.map((value, i) => {
+            const Icon = value.icon;
+            return (
+              <motion.div
+                key={value.title}
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{ delay: i * 0.08, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                className={`group relative border rounded-2xl p-7 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg ${value.lightColor}`}
+              >
+                {/* Icon */}
+                <div className="mb-5">
+                  <Icon className={`w-7 h-7 ${value.iconColor}`} strokeWidth={1.6} />
+                </div>
 
-              {/* Title */}
-              <h3 className={`text-base font-semibold mb-3 ${value.color}`}>
-                {value.title}
-              </h3>
+                {/* Title */}
+                <h3 className={`text-base font-semibold mb-3 ${value.color}`}>
+                  {value.title}
+                </h3>
 
-              {/* Description */}
-              <p className="text-sm text-neutral-600 font-light leading-relaxed">
-                {value.description}
-              </p>
-            </motion.div>
-          ))}
+                {/* Description */}
+                <p className="text-sm text-neutral-600 font-light leading-relaxed">
+                  {value.description}
+                </p>
+              </motion.div>
+            );
+          })}
         </div>
       </div>
     </section>

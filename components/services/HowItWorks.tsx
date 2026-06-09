@@ -80,7 +80,7 @@ export default function HowItWorks() {
               >
                 {/* Circle with emoji + step badge */}
                 <div className="relative mb-6">
-                  <div className="w-[72px] h-[72px] rounded-full bg-green-50 border-2 border-green-100 group-hover:border-green-400 group-hover:bg-green-100 flex items-center justify-center text-2xl transition-all duration-300 shadow-sm">
+                  <div className="w-18 h-18 rounded-full bg-green-50 border-2 border-green-100 group-hover:border-green-400 group-hover:bg-green-100 flex items-center justify-center text-2xl transition-all duration-300 shadow-sm">
                     {step.icon}
                   </div>
                   <span className="absolute -top-1.5 -right-1.5 w-6 h-6 rounded-full bg-green-600 text-white text-[10px] font-bold flex items-center justify-center shadow">

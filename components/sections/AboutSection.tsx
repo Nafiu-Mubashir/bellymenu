@@ -53,9 +53,9 @@ export default function AboutSection() {
             className="relative"
           >
             {/* Main card */}
-            <div className="relative bg-neutral-950 rounded-3xl overflow-hidden aspect-[4/3] flex items-end">
+            <div className="relative bg-neutral-950 rounded-3xl overflow-hidden aspect-4/3 flex items-end">
               {/* Decorative gradient */}
-              <div className="absolute inset-0 bg-gradient-to-br from-green-900/30 via-neutral-950 to-neutral-950" />
+              <div className="absolute inset-0 bg-linear-to-br from-green-900/30 via-neutral-950 to-neutral-950" />
               {/* Real photo */}
               <Image
                 src={IMAGES.about.homepageCard}
@@ -64,7 +64,7 @@ export default function AboutSection() {
                 className="object-cover opacity-60"
                 sizes="(max-width: 1024px) 100vw, 50vw"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-neutral-950/85 via-neutral-950/20 to-transparent" />
+              <div className="absolute inset-0 bg-linear-to-t from-neutral-950/85 via-neutral-950/20 to-transparent" />
               {/* Caption */}
               <div className="relative z-10 p-8 w-full">
                 <h3 className="font-playfair text-2xl text-white font-semibold leading-snug mb-1">
@@ -125,7 +125,7 @@ export default function AboutSection() {
                   transition={{ delay: i * 0.1 + 0.2, duration: 0.45 }}
                   className="flex items-start gap-4 p-4 rounded-xl border border-neutral-100 hover:border-green-200 hover:bg-green-50/40 transition-all duration-200"
                 >
-                  <div className="w-10 h-10 rounded-xl bg-green-50 flex items-center justify-center text-xl flex-shrink-0">
+                  <div className="w-10 h-10 rounded-xl bg-green-50 flex items-center justify-center text-xl shrink-0">
                     {pillar.icon}
                   </div>
                   <div>

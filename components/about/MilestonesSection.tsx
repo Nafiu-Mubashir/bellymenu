@@ -48,7 +48,7 @@ export default function MilestonesSection({ milestones }: MilestonesSectionProps
         {/* Timeline */}
         <div className="relative">
           {/* Vertical line — desktop only */}
-          <div className="hidden md:block absolute left-[118px] top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-green-200 to-transparent" aria-hidden="true" />
+          <div className="hidden md:block absolute left-29.5 top-0 bottom-0 w-px bg-linear-to-b from-transparent via-green-200 to-transparent" aria-hidden="true" />
 
           <div className="space-y-0">
             {list.map((milestone, i) => (
@@ -61,14 +61,14 @@ export default function MilestonesSection({ milestones }: MilestonesSectionProps
                 className="group relative flex items-start gap-8 md:gap-12 py-5 md:py-6"
               >
                 {/* Year */}
-                <div className="flex-shrink-0 w-[80px] md:w-[100px] text-right">
+                <div className="shrink-0 w-20 md:w-25 text-right">
                   <span className="font-playfair text-lg md:text-xl font-semibold text-neutral-400 group-hover:text-green-600 transition-colors duration-200">
                     {milestone.year}
                   </span>
                 </div>
 
                 {/* Dot — desktop */}
-                <div className="hidden md:flex flex-shrink-0 w-5 h-5 rounded-full border-2 border-neutral-200 group-hover:border-green-500 group-hover:bg-green-500 bg-white transition-all duration-200 mt-1 z-10" />
+                <div className="hidden md:flex shrink-0 w-5 h-5 rounded-full border-2 border-neutral-200 group-hover:border-green-500 group-hover:bg-green-500 bg-white transition-all duration-200 mt-1 z-10" />
 
                 {/* Content */}
                 <div className="flex-1 pb-5 md:pb-6 border-b border-neutral-100 group-hover:border-green-100 transition-colors duration-200">
