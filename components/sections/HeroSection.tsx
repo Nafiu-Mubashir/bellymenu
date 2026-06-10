@@ -92,12 +92,12 @@ export default function HeroSection({ data }: HeroSectionProps) {
       {/* Green colour tint orbs */}
       <motion.div
         style={{ y: blobY }}
-        className="pointer-events-none absolute -top-32 -right-32 w-150 h-150 rounded-full bg-green-600/15 blur-[120px] z-10"
+        className="pointer-events-none absolute -top-32 right-0 w-[600px] h-[600px] rounded-full bg-green-600/15 blur-[120px] z-10"
         aria-hidden="true"
       />
       <motion.div
         style={{ y: blobY }}
-        className="pointer-events-none absolute bottom-0 -left-40 w-125 h-125 rounded-full bg-emerald-500/8 blur-[100px] z-10"
+        className="pointer-events-none absolute bottom-0 left-0 w-[500px] h-[500px] rounded-full bg-emerald-500/8 blur-[100px] z-10"
         aria-hidden="true"
       />
 

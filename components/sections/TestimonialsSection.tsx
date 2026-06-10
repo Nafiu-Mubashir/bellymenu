@@ -87,7 +87,7 @@ export default function TestimonialsSection({ testimonials }: TestimonialsSectio
   return (
     <section id="testimonials" className="py-24 md:py-32 bg-neutral-950 overflow-hidden">
       {/* Decorative orb */}
-      <div className="pointer-events-none absolute -right-40 top-1/2 w-96 h-96 rounded-full bg-green-700/10 blur-3xl" aria-hidden="true" />
+      <div className="pointer-events-none absolute right-0 top-1/2 w-96 h-96 rounded-full bg-green-700/10 blur-3xl" aria-hidden="true" />
 
       <div className="mx-auto max-w-7xl px-5 md:px-10 relative">
 
