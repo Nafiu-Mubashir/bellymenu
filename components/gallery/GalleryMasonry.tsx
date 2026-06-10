@@ -6,7 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ZoomIn } from "lucide-react";
 import type { GalleryItem } from "@/types";
 import GalleryFilter, {
-  GALLERY_CATEGORIES,
+  // GALLERY_CATEGORIES,
   type GalleryCategoryId,
 } from "./GalleryFilter";
 import GalleryLightbox from "./GalleryLightbox";
@@ -75,7 +75,7 @@ function RealTile({ item, index, onClick }: { item: GalleryItem; index: number; 
       <div className="absolute inset-0 bg-neutral-950/0 group-hover:bg-neutral-950/45 transition-all duration-300 flex items-center justify-center">
         <ZoomIn size={22} className="text-white opacity-0 group-hover:opacity-100 transition-all duration-300 scale-75 group-hover:scale-100" />
       </div>
-      <div className="absolute bottom-0 inset-x-0 p-3 bg-gradient-to-t from-neutral-950/75 to-transparent translate-y-2 opacity-0 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
+      <div className="absolute bottom-0 inset-x-0 p-3 bg-linear-to-t from-neutral-950/75 to-transparent translate-y-2 opacity-0 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
         <p className="text-xs font-semibold text-white truncate">{item.title}</p>
         <p className="text-[10px] text-white/50 capitalize mt-0.5">{item.category}</p>
       </div>
@@ -113,7 +113,7 @@ function StockTile({ tile, index, onClick }: { tile: FallbackTile; index: number
         <ZoomIn size={22} className="text-white opacity-0 group-hover:opacity-100 transition-all duration-300 scale-75 group-hover:scale-100" />
       </div>
       {/* Caption */}
-      <div className="absolute bottom-0 inset-x-0 p-3 bg-gradient-to-t from-neutral-950/75 to-transparent translate-y-2 opacity-0 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
+      <div className="absolute bottom-0 inset-x-0 p-3 bg-linear-to-t from-neutral-950/75 to-transparent translate-y-2 opacity-0 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
         <p className="text-xs font-semibold text-white truncate">{tile.title}</p>
         <p className="text-[10px] text-white/50 capitalize mt-0.5">{tile.category}</p>
       </div>

@@ -2,7 +2,7 @@
 
 import { useEffect, useCallback } from "react";
 import Image from "next/image";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { X, ChevronLeft, ChevronRight, Download, Share2 } from "lucide-react";
 
 // ─── Normalised item shape ────────────────────────────────────────────────────
@@ -75,7 +75,7 @@ export default function GalleryLightbox({
       aria-label={`Image viewer: ${current.title}`}
     >
       {/* ── Top bar ── */}
-      <div className="absolute top-0 inset-x-0 z-10 flex items-center justify-between px-5 py-4 bg-gradient-to-b from-neutral-950/80 to-transparent">
+      <div className="absolute top-0 inset-x-0 z-10 flex items-center justify-between px-5 py-4 bg-linear-to-b from-neutral-950/80 to-transparent">
         <div>
           <p className="text-sm font-semibold text-white">{current.title}</p>
           <p className="text-xs text-white/40 mt-0.5">{categoryLabel}</p>
@@ -161,7 +161,7 @@ export default function GalleryLightbox({
       </button>
 
       {/* ── Bottom strip ── */}
-      <div className="absolute bottom-0 inset-x-0 z-10 flex flex-col items-center gap-3 pb-6 bg-gradient-to-t from-neutral-950/80 to-transparent pt-8">
+      <div className="absolute bottom-0 inset-x-0 z-10 flex flex-col items-center gap-3 pb-6 bg-linear-to-t from-neutral-950/80 to-transparent pt-8">
         <div className="flex items-center gap-1.5">
           {items.slice(0, 12).map((_, i) => (
             <div

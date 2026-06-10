@@ -18,7 +18,7 @@ export default function MenuHero() {
       />
 
       {/* Centre glow */}
-      <div className="pointer-events-none absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[500px] rounded-full bg-green-700/12 blur-[130px] z-10" aria-hidden="true" />
+      <div className="pointer-events-none absolute top-0 left-1/2 -translate-x-1/2 w-200 h-125 rounded-full bg-green-700/12 blur-[130px] z-10" aria-hidden="true" />
       <div className="pointer-events-none absolute bottom-0 -left-24 w-80 h-80 rounded-full bg-emerald-900/12 blur-3xl z-10" aria-hidden="true" />
       <div className="pointer-events-none absolute bottom-0 -right-24 w-72 h-72 rounded-full bg-green-900/8 blur-3xl z-10" aria-hidden="true" />
       {/* Grid */}

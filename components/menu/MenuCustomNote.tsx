@@ -24,7 +24,7 @@ export default function MenuCustomNote() {
   return (
     <section className="py-24 bg-neutral-950 overflow-hidden relative">
       {/* Decorative orbs */}
-      <div className="pointer-events-none absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-60 rounded-full bg-green-700/12 blur-3xl" aria-hidden="true" />
+      <div className="pointer-events-none absolute top-0 left-1/2 -translate-x-1/2 w-150 h-60 rounded-full bg-green-700/12 blur-3xl" aria-hidden="true" />
       <div className="pointer-events-none absolute bottom-0 right-0 w-72 h-72 rounded-full bg-emerald-900/10 blur-3xl" aria-hidden="true" />
 
       <div className="relative z-10 mx-auto max-w-7xl px-5 md:px-10">
@@ -107,7 +107,7 @@ export default function MenuCustomNote() {
                 className="object-cover"
                 sizes="(max-width: 1024px) 100vw, 50vw"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-neutral-950/80 via-neutral-950/20 to-transparent" />
+              <div className="absolute inset-0 bg-linear-to-t from-neutral-950/80 via-neutral-950/20 to-transparent" />
               <div className="absolute bottom-5 left-6 right-6">
                 <p className="font-playfair text-lg text-white font-semibold leading-snug">
                  {` "We design every menu`}
@@ -134,7 +134,7 @@ export default function MenuCustomNote() {
                     transition={{ delay: i * 0.06 + 0.2 }}
                     className="flex items-start gap-4"
                   >
-                    <div className="w-7 h-7 rounded-full bg-green-600/20 border border-green-600/30 flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <div className="w-7 h-7 rounded-full bg-green-600/20 border border-green-600/30 flex items-center justify-center shrink-0 mt-0.5">
                       <span className="text-[10px] font-bold text-green-400">{item.step}</span>
                     </div>
                     <p className="text-sm text-white/60 font-light leading-relaxed">
@@ -144,7 +144,7 @@ export default function MenuCustomNote() {
                 ))}
               </div>
               <div className="mt-5 pt-5 border-t border-white/8 flex items-center gap-2">
-                <CheckCircle2 size={13} className="text-green-500 flex-shrink-0" />
+                <CheckCircle2 size={13} className="text-green-500 shrink-0" />
                 <p className="text-xs text-white/30 font-light">
                   100% free · No obligation · We reply within 24 hours
                 </p>

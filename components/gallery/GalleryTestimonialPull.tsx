@@ -45,8 +45,8 @@ export default function GalleryTestimonialPull() {
             ))}
           </div>
 
-          <p className="font-playfair text-[clamp(1.3rem,3vw,2rem)] font-medium text-white leading-[1.5] italic mb-8 max-w-3xl mx-auto">
-            "{QUOTE.text}"
+          <p className="font-playfair text-[clamp(1.3rem,3vw,2rem)] font-medium text-white leading-normal italic mb-8 max-w-3xl mx-auto">
+           {` "${QUOTE.text}"`}
           </p>
 
           {/* Author */}

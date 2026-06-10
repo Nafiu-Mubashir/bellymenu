@@ -59,7 +59,7 @@ export default function GalleryEventStrip() {
               />
               {/* Gradient overlay — darkens bottom for text */}
               <div
-                className={`absolute inset-0 bg-gradient-to-t ${event.accent} via-neutral-950/20 to-transparent`}
+                className={`absolute inset-0 bg-linear-to-t ${event.accent} via-neutral-950/20 to-transparent`}
               />
 
               {/* Content over photo */}

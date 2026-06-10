@@ -39,7 +39,7 @@ export default function Footer() {
                 Belly<span className="text-green-400">menu</span>
               </span>
             </Link>
-            <p className="text-sm text-neutral-400 leading-relaxed font-light max-w-[240px] mb-6">
+            <p className="text-sm text-neutral-400 leading-relaxed font-light max-w-60 mb-6">
               Premium catering for weddings, corporate events, parties, and private occasions across Nigeria.
             </p>
             {/* Social icons */}
@@ -125,7 +125,7 @@ export default function Footer() {
                   rel="noopener noreferrer"
                   className="flex items-start gap-3 text-sm text-neutral-400 hover:text-green-400 transition-colors group"
                 >
-                  <MapPin size={15} className="mt-0.5 flex-shrink-0 text-green-600 group-hover:text-green-400" />
+                  <MapPin size={15} className="mt-0.5 shrink-0 text-green-600 group-hover:text-green-400" />
                   <span className="font-light leading-snug">Abuja, Nigeria</span>
                 </a>
               </li>
@@ -134,7 +134,7 @@ export default function Footer() {
                   href="tel:+2348012345678"
                   className="flex items-center gap-3 text-sm text-neutral-400 hover:text-green-400 transition-colors group"
                 >
-                  <Phone size={15} className="flex-shrink-0 text-green-600 group-hover:text-green-400" />
+                  <Phone size={15} className="shrink-0 text-green-600 group-hover:text-green-400" />
                   <span className="font-light">+234 801 234 5678</span>
                 </a>
               </li>
@@ -143,7 +143,7 @@ export default function Footer() {
                   href="mailto:hello@bellymenukitchen.com"
                   className="flex items-center gap-3 text-sm text-neutral-400 hover:text-green-400 transition-colors group"
                 >
-                  <Mail size={15} className="flex-shrink-0 text-green-600 group-hover:text-green-400" />
+                  <Mail size={15} className="shrink-0 text-green-600 group-hover:text-green-400" />
                   <span className="font-light break-all">hello@bellymenukitchen.com</span>
                 </a>
               </li>

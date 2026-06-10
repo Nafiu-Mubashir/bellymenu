@@ -23,11 +23,11 @@ export default function GalleryHero({ totalCount }: GalleryHeroProps) {
 
       {/* Decorative glows — z-10 to sit above the photo */}
       <div
-        className="pointer-events-none absolute -top-10 left-1/2 -translate-x-1/2 w-[900px] h-[420px] rounded-full bg-green-700/12 blur-[130px] z-10"
+        className="pointer-events-none absolute -top-10 left-1/2 -translate-x-1/2 w-225 h-105 rounded-full bg-green-700/12 blur-[130px] z-10"
         aria-hidden="true"
       />
       <div
-        className="pointer-events-none absolute bottom-0 -right-32 w-[400px] h-[400px] rounded-full bg-emerald-900/10 blur-3xl z-10"
+        className="pointer-events-none absolute bottom-0 -right-32 w-100 h-100 rounded-full bg-emerald-900/10 blur-3xl z-10"
         aria-hidden="true"
       />
       {/* Grid texture */}
