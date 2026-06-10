@@ -15,7 +15,7 @@ const QUOTE = {
 
 export default function GalleryTestimonialPull() {
   return (
-    <section className="py-20 bg-green-600 overflow-hidden relative">
+    <section className="py-20 bg-black overflow-hidden relative">
       {/* Pattern */}
       <div
         className="pointer-events-none absolute inset-0 opacity-[0.06]"

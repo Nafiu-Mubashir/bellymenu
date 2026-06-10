@@ -1,13 +1,38 @@
 "use client";
 
+import Image from "next/image";
 import { motion } from "framer-motion";
+import { IMAGES } from "@/app/lib/images";
 
-// A quick visual summary row — event types with counts
 const EVENT_TYPES = [
-  { emoji: "💍", label: "Weddings",       count: "200+", description: "From intimate ceremonies to grand receptions" },
-  { emoji: "🏢", label: "Corporate",      count: "120+", description: "Galas, lunches, product launches & away-days" },
-  { emoji: "🎉", label: "Celebrations",   count: "150+", description: "Birthdays, anniversaries, graduations" },
-  { emoji: "🍽️", label: "Private Dining", count: "80+",  description: "Exclusive chef experiences at home or venue" },
+  {
+    img:         IMAGES.gallery.wedding1,
+    label:       "Weddings",
+    count:       "200+",
+    description: "From intimate ceremonies to grand receptions",
+    accent:      "from-rose-900/60",
+  },
+  {
+    img:         IMAGES.gallery.corporate1,
+    label:       "Corporate",
+    count:       "120+",
+    description: "Galas, lunches, product launches & away-days",
+    accent:      "from-blue-900/60",
+  },
+  {
+    img:         IMAGES.gallery.party1,
+    label:       "Celebrations",
+    count:       "150+",
+    description: "Birthdays, anniversaries, graduations",
+    accent:      "from-purple-900/60",
+  },
+  {
+    img:         IMAGES.gallery.setup1,
+    label:       "Private Dining",
+    count:       "80+",
+    description: "Exclusive chef experiences at home or venue",
+    accent:      "from-green-900/60",
+  },
 ];
 
 export default function GalleryEventStrip() {
@@ -22,22 +47,31 @@ export default function GalleryEventStrip() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.08, duration: 0.5 }}
-              className="group text-center p-5 rounded-2xl bg-white border border-neutral-100 hover:border-green-200 hover:shadow-lg hover:shadow-green-50 transition-all duration-300"
+              className="group relative rounded-2xl overflow-hidden cursor-default h-48 bg-neutral-200"
             >
-              <motion.div
-                className="text-4xl mb-3"
-                animate={{ y: [0, -4, 0] }}
-                transition={{ repeat: Infinity, duration: 3 + i * 0.5, ease: "easeInOut" }}
-              >
-                {event.emoji}
-              </motion.div>
-              <p className="font-playfair text-2xl font-semibold text-neutral-900 group-hover:text-green-700 transition-colors">
-                {event.count}
-              </p>
-              <p className="text-sm font-semibold text-neutral-700 mt-0.5">{event.label}</p>
-              <p className="text-xs text-neutral-400 font-light mt-1.5 leading-snug">
-                {event.description}
-              </p>
+              {/* Photo */}
+              <Image
+                src={event.img}
+                alt={event.label}
+                fill
+                className="object-cover transition-transform duration-500 group-hover:scale-105"
+                sizes="(max-width: 640px) 50vw, 25vw"
+              />
+              {/* Gradient overlay — darkens bottom for text */}
+              <div
+                className={`absolute inset-0 bg-gradient-to-t ${event.accent} via-neutral-950/20 to-transparent`}
+              />
+
+              {/* Content over photo */}
+              <div className="absolute inset-0 flex flex-col justify-end p-4">
+                <p className="font-playfair text-2xl font-semibold text-white leading-none mb-0.5">
+                  {event.count}
+                </p>
+                <p className="text-sm font-semibold text-white">{event.label}</p>
+                <p className="text-[11px] text-white/60 font-light mt-1 leading-snug">
+                  {event.description}
+                </p>
+              </div>
             </motion.div>
           ))}
         </div>

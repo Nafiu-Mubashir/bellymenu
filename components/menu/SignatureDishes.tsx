@@ -1,57 +1,59 @@
 "use client";
 
+import Image from "next/image";
 import { motion } from "framer-motion";
+import { IMAGES } from "@/app/lib/images";
 
 interface SignatureDish {
-  emoji: string;
+  img: string;
   name: string;
   origin: string;
   description: string;
   tags: string[];
   accentColor: string;
-  lightBg: string;
+  borderColor: string;
 }
 
 const SIGNATURE_DISHES: SignatureDish[] = [
   {
-    emoji: "🍚",
+    img: IMAGES.dishes.jollof,
     name: "Firewood Jollof Rice",
     origin: "Nigerian Classic",
     description:
       "Slow-cooked over real firewood in the traditional party style. The smoky, rich base tomato sauce is our most-requested dish — guests always come back for more.",
     tags: ["Halal", "Most Requested", "Buffet"],
     accentColor: "text-orange-600",
-    lightBg: "bg-orange-50 border-orange-100",
+    borderColor: "border-orange-100 hover:border-orange-200",
   },
   {
-    emoji: "🍖",
+    img: IMAGES.dishes.suya,
     name: "Live Suya Station",
     origin: "Northern Nigerian",
     description:
       "Tender beef marinated in our house yaji spice blend and grilled live at your event. Served with fresh onions, tomatoes, and newspaper wrap for that authentic roadside feel.",
     tags: ["Halal", "Live Station", "Gluten-Free"],
     accentColor: "text-red-600",
-    lightBg: "bg-red-50 border-red-100",
+    borderColor: "border-red-100 hover:border-red-200",
   },
   {
-    emoji: "🥣",
+    img: IMAGES.dishes.egusi,
     name: "Egusi Soup & Swallow",
     origin: "Southern Nigerian",
     description:
       "Stone-ground melon seed soup, slow-cooked with assorted meats in palm oil. Served with pounded yam, eba, or semolina — the kind that makes you feel at home.",
     tags: ["Traditional", "Gluten-Free", "Halal"],
     accentColor: "text-green-700",
-    lightBg: "bg-green-50 border-green-100",
+    borderColor: "border-green-100 hover:border-green-200",
   },
   {
-    emoji: "🥂",
+    img: IMAGES.dishes.smallChops,
     name: "Small Chops Platter",
     origin: "Nigerian Party Staple",
     description:
       "Our premium small chops selection: puff puff, spring rolls, samosa, peppered gizzard, and mini jollof cups — beautifully presented and passed by uniformed staff.",
     tags: ["Cocktail Reception", "Popular", "Customisable"],
     accentColor: "text-amber-600",
-    lightBg: "bg-amber-50 border-amber-100",
+    borderColor: "border-amber-100 hover:border-amber-200",
   },
 ];
 
@@ -93,42 +95,46 @@ export default function SignatureDishes() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.2 }}
               transition={{ delay: i * 0.08, duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-              className={`group border rounded-2xl p-6 flex flex-col gap-4 hover:-translate-y-1 hover:shadow-lg transition-all duration-300 ${dish.lightBg}`}
+              className={`group bg-white border rounded-2xl overflow-hidden flex flex-col hover:-translate-y-1.5 hover:shadow-xl transition-all duration-300 ${dish.borderColor}`}
             >
-              {/* Emoji */}
-              <motion.div
-                className="text-5xl"
-                animate={{ rotate: [0, 4, -4, 0] }}
-                transition={{ repeat: Infinity, duration: 4 + i, ease: "easeInOut" }}
-              >
-                {dish.emoji}
-              </motion.div>
+              {/* Photo */}
+              <div className="relative h-48 overflow-hidden bg-neutral-100">
+                <Image
+                  src={dish.img}
+                  alt={dish.name}
+                  fill
+                  className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                />
+                {/* Gradient overlay for origin badge readability */}
+                <div className="absolute inset-0 bg-linear-to-t from-neutral-950/50 to-transparent" />
+                {/* Origin badge — floated over the photo */}
+                <span className={`absolute bottom-3 left-3 text-[10px] font-bold tracking-widest uppercase text-white bg-neutral-950/60 backdrop-blur-sm px-2.5 py-1 rounded-full`}>
+                  {dish.origin}
+                </span>
+              </div>
 
-              {/* Origin badge */}
-              <span className={`text-[10px] font-semibold tracking-widest uppercase ${dish.accentColor}`}>
-                {dish.origin}
-              </span>
+              {/* Content */}
+              <div className="p-5 flex flex-col gap-3 flex-1">
+                <h3 className="font-playfair text-lg font-semibold text-neutral-900 leading-snug group-hover:text-green-700 transition-colors duration-200">
+                  {dish.name}
+                </h3>
 
-              {/* Name */}
-              <h3 className="font-playfair text-xl font-semibold text-neutral-900 leading-snug">
-                {dish.name}
-              </h3>
+                <p className="text-sm text-neutral-600 font-light leading-relaxed flex-1">
+                  {dish.description}
+                </p>
 
-              {/* Description */}
-              <p className="text-sm text-neutral-600 font-light leading-relaxed flex-1">
-                {dish.description}
-              </p>
-
-              {/* Tags */}
-              <div className="flex flex-wrap gap-1.5 mt-auto">
-                {dish.tags.map((tag) => (
-                  <span
-                    key={tag}
-                    className="text-[10px] font-medium bg-white/70 border border-white px-2.5 py-1 rounded-full text-neutral-600"
-                  >
-                    {tag}
-                  </span>
-                ))}
+                {/* Tags */}
+                <div className="flex flex-wrap gap-1.5 mt-auto pt-1">
+                  {dish.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="text-[10px] font-semibold bg-neutral-50 border border-neutral-100 px-2.5 py-1 rounded-full text-neutral-600"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
               </div>
             </motion.div>
           ))}

@@ -3,39 +3,35 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { ChevronRight, MessageCircle } from "lucide-react";
+import HeroBackground from "@/components/ui/HeroBackground";
+import { IMAGES } from "@/app/lib/images";
 
 export default function MenuHero() {
   return (
     <section className="relative pt-32 pb-24 bg-neutral-950 overflow-hidden">
+      {/* Real food photo background */}
+      <HeroBackground
+        src={IMAGES.hero.menu}
+        overlayOpacity={0.72}
+        greenTint={0.05}
+        priority
+      />
+
       {/* Centre glow */}
-      <div
-        className="pointer-events-none absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[500px] rounded-full bg-green-700/15 blur-[130px]"
-        aria-hidden="true"
-      />
-      <div
-        className="pointer-events-none absolute bottom-0 -left-24 w-80 h-80 rounded-full bg-emerald-900/15 blur-3xl"
-        aria-hidden="true"
-      />
-      <div
-        className="pointer-events-none absolute bottom-0 -right-24 w-72 h-72 rounded-full bg-green-900/10 blur-3xl"
-        aria-hidden="true"
-      />
+      <div className="pointer-events-none absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[500px] rounded-full bg-green-700/12 blur-[130px] z-10" aria-hidden="true" />
+      <div className="pointer-events-none absolute bottom-0 -left-24 w-80 h-80 rounded-full bg-emerald-900/12 blur-3xl z-10" aria-hidden="true" />
+      <div className="pointer-events-none absolute bottom-0 -right-24 w-72 h-72 rounded-full bg-green-900/8 blur-3xl z-10" aria-hidden="true" />
       {/* Grid */}
       <div
-        className="pointer-events-none absolute inset-0 opacity-[0.025]"
+        className="pointer-events-none absolute inset-0 opacity-[0.022] z-10"
         style={{
-          backgroundImage:
-            "linear-gradient(#fff 1px,transparent 1px),linear-gradient(90deg,#fff 1px,transparent 1px)",
+          backgroundImage: "linear-gradient(#fff 1px,transparent 1px),linear-gradient(90deg,#fff 1px,transparent 1px)",
           backgroundSize: "56px 56px",
         }}
         aria-hidden="true"
       />
-      <div
-        className="pointer-events-none absolute inset-0 bg-gradient-to-b from-neutral-950/30 via-transparent to-neutral-950/80"
-        aria-hidden="true"
-      />
 
-      <div className="relative z-10 mx-auto max-w-7xl px-5 md:px-10 text-center">
+      <div className="relative z-20 mx-auto max-w-7xl px-5 md:px-10 text-center">
         {/* Breadcrumb */}
         <motion.nav
           initial={{ opacity: 0, y: -8 }}
@@ -79,7 +75,7 @@ export default function MenuHero() {
           initial={{ opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.55, delay: 0.2 }}
-          className="text-base md:text-lg text-white/50 font-light leading-relaxed max-w-xl mx-auto mb-10"
+          className="text-base md:text-lg text-white/55 font-light leading-relaxed max-w-xl mx-auto mb-10"
         >
           Our menu is a love letter to Nigerian cuisine — elevated with continental
           classics and crafted fresh for every single event.
@@ -109,24 +105,6 @@ export default function MenuHero() {
             Discuss Your Menu
           </a>
         </motion.div>
-
-        {/* Floating food icons */}
-        {["🍛", "🥘", "🍖", "🎂", "🥗", "🍹"].map((emoji, i) => (
-          <motion.span
-            key={emoji}
-            className="absolute text-2xl select-none pointer-events-none hidden lg:block"
-            style={{
-              left: `${8 + i * 16}%`,
-              top: `${20 + (i % 2 === 0 ? 10 : 55)}%`,
-              opacity: 0.12,
-            }}
-            animate={{ y: [0, -10, 0], rotate: [0, i % 2 === 0 ? 8 : -8, 0] }}
-            transition={{ repeat: Infinity, duration: 3 + i * 0.4, ease: "easeInOut", delay: i * 0.3 }}
-            aria-hidden="true"
-          >
-            {emoji}
-          </motion.span>
-        ))}
       </div>
     </section>
   );

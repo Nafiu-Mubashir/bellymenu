@@ -1,14 +1,23 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { ChefHat, MessageCircle, CalendarCheck } from "lucide-react";
+import { MessageCircle, CalendarCheck, CheckCircle2 } from "lucide-react";
+import { IMAGES } from "@/app/lib/images";
 
 const PERKS = [
   { icon: "🥩", text: "Nigerian & continental options" },
   { icon: "🌿", text: "Fresh, locally sourced ingredients" },
   { icon: "⚕️", text: "All dietary requirements catered for" },
   { icon: "🎯", text: "100% custom menu per event" },
+];
+
+const CONSULTATION_STEPS = [
+  { step: "01", text: "Tell us your event date & guest count" },
+  { step: "02", text: "Describe your vision, theme & preferences" },
+  { step: "03", text: "Receive a custom menu proposal within 48hrs" },
+  { step: "04", text: "Optional tasting session before you confirm" },
 ];
 
 export default function MenuCustomNote() {
@@ -44,7 +53,7 @@ export default function MenuCustomNote() {
               The dishes on this page are just a starting point. In your free consultation, our head chef works with you to design a menu that reflects your occasion, guests, and vision — nothing generic, ever.
             </p>
 
-            {/* Perks */}
+            {/* Perks grid */}
             <div className="grid grid-cols-2 gap-3 mb-10">
               {PERKS.map((perk, i) => (
                 <motion.div
@@ -81,46 +90,61 @@ export default function MenuCustomNote() {
             </div>
           </motion.div>
 
-          {/* Right: chef card */}
+          {/* Right: real chef photo + consultation steps */}
           <motion.div
             initial={{ opacity: 0, x: 24 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.65, delay: 0.12, ease: [0.22, 1, 0.36, 1] }}
+            className="space-y-4"
           >
-            <div className="bg-white/5 border border-white/8 rounded-3xl p-8">
-              {/* Chef icon */}
-              <div className="w-16 h-16 rounded-2xl bg-green-900/50 border border-green-700/30 flex items-center justify-center mb-6">
-                <ChefHat size={30} className="text-green-400" />
+            {/* Photo card */}
+            <div className="relative h-56 rounded-2xl overflow-hidden bg-neutral-800">
+              <Image
+                src={IMAGES.about.kitchenCard}
+                alt="Bellymenu Kitchen chef at work"
+                fill
+                className="object-cover"
+                sizes="(max-width: 1024px) 100vw, 50vw"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-neutral-950/80 via-neutral-950/20 to-transparent" />
+              <div className="absolute bottom-5 left-6 right-6">
+                <p className="font-playfair text-lg text-white font-semibold leading-snug">
+                 {` "We design every menu`}
+                  <em className="not-italic text-green-400"> {`from scratch."`}</em>
+                </p>
+                <p className="text-xs text-white/45 font-light mt-1.5">
+                  — Chiamaka Obi, Head Chef & Founder
+                </p>
               </div>
+            </div>
 
-              <h3 className="font-playfair text-2xl font-semibold text-white mb-2">
-                Free Menu Consultation
-              </h3>
-              <p className="text-sm text-white/50 font-light leading-relaxed mb-7">
-                Sit with our head chef — in person or virtually — to design your event menu from scratch. No pressure, no commitment until you're completely happy.
+            {/* Consultation steps card */}
+            <div className="bg-white/5 border border-white/8 rounded-2xl p-6">
+              <p className="text-xs font-semibold text-white/50 tracking-widest uppercase mb-5">
+                Free Consultation — How It Works
               </p>
-
-              {/* Steps */}
-              <div className="space-y-4">
-                {[
-                  { step: "01", text: "Tell us your event date & guest count" },
-                  { step: "02", text: "Describe your vision, theme & preferences" },
-                  { step: "03", text: "Receive a custom menu proposal within 48hrs" },
-                  { step: "04", text: "Optional tasting session before you confirm" },
-                ].map((item) => (
-                  <div key={item.step} className="flex items-start gap-4">
-                    <span className="font-playfair text-green-500/60 font-semibold text-lg leading-none flex-shrink-0 w-8">
-                      {item.step}
-                    </span>
+              <div className="space-y-3.5">
+                {CONSULTATION_STEPS.map((item, i) => (
+                  <motion.div
+                    key={item.step}
+                    initial={{ opacity: 0, x: 10 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: i * 0.06 + 0.2 }}
+                    className="flex items-start gap-4"
+                  >
+                    <div className="w-7 h-7 rounded-full bg-green-600/20 border border-green-600/30 flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <span className="text-[10px] font-bold text-green-400">{item.step}</span>
+                    </div>
                     <p className="text-sm text-white/60 font-light leading-relaxed">
                       {item.text}
                     </p>
-                  </div>
+                  </motion.div>
                 ))}
               </div>
-
-              <div className="mt-7 pt-5 border-t border-white/8 text-center">
+              <div className="mt-5 pt-5 border-t border-white/8 flex items-center gap-2">
+                <CheckCircle2 size={13} className="text-green-500 flex-shrink-0" />
                 <p className="text-xs text-white/30 font-light">
                   100% free · No obligation · We reply within 24 hours
                 </p>

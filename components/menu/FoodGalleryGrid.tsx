@@ -1,42 +1,50 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, ChevronLeft, ChevronRight, ZoomIn } from "lucide-react";
 import type { GalleryItem } from "@/types";
+import { IMAGES } from "@/app/lib/images";
 import { urlFor } from "@/sanity/lib/image";
 
-// ─── Fallback placeholder tiles ───────────────────────────────────────────────
+// ─── Fallback stock-photo tiles ───────────────────────────────────────────────
+// Replace by uploading galleryItem documents in Sanity Studio
 const FALLBACK_TILES = [
-  { id: "1", emoji: "🍛", label: "Jollof Rice Spread",       category: "Nigerian",   bg: "bg-orange-50" },
-  { id: "2", emoji: "🥂", label: "Small Chops Platter",      category: "Canapés",    bg: "bg-amber-50" },
-  { id: "3", emoji: "🍖", label: "Live Suya Station",        category: "Grill",      bg: "bg-red-50" },
-  { id: "4", emoji: "🎂", label: "Celebration Cake",         category: "Desserts",   bg: "bg-rose-50" },
-  { id: "5", emoji: "🥩", label: "Continental Carving",      category: "Continental",bg: "bg-slate-50" },
-  { id: "6", emoji: "🥣", label: "Egusi & Pounded Yam",      category: "Nigerian",   bg: "bg-green-50" },
-  { id: "7", emoji: "🍹", label: "Chapman Bar Setup",        category: "Drinks",     bg: "bg-sky-50" },
-  { id: "8", emoji: "🌿", label: "Outdoor Event Setup",      category: "Events",     bg: "bg-emerald-50" },
-  { id: "9", emoji: "🍝", label: "Live Pasta Station",       category: "Continental",bg: "bg-yellow-50" },
+  { id: "1", label: "Jollof Rice Spread",   category: "Nigerian",    img: IMAGES.gallery.food1      },
+  { id: "2", label: "Small Chops Platter",  category: "Canapés",     img: IMAGES.gallery.cocktail1  },
+  { id: "3", label: "Live Suya Station",    category: "Grill",       img: IMAGES.gallery.food2      },
+  { id: "4", label: "Celebration Setup",    category: "Desserts",    img: IMAGES.gallery.party1     },
+  { id: "5", label: "Continental Carving",  category: "Continental", img: IMAGES.gallery.corporate1 },
+  { id: "6", label: "Egusi & Pounded Yam",  category: "Nigerian",    img: IMAGES.gallery.food4      },
+  { id: "7", label: "Chapman Bar Setup",    category: "Drinks",      img: IMAGES.gallery.cocktail2  },
+  { id: "8", label: "Outdoor Event Setup",  category: "Events",      img: IMAGES.gallery.outdoor1   },
+  { id: "9", label: "Live Pasta Station",   category: "Continental", img: IMAGES.gallery.setup1     },
 ];
+
+type FallbackTile = (typeof FALLBACK_TILES)[0];
+type LightboxItem = { id: string; label: string; category: string; img: string };
 
 const PHOTO_CATEGORIES = ["All", "Nigerian", "Continental", "Canapés", "Grill", "Desserts", "Drinks", "Events"];
 
 // ─── Lightbox ────────────────────────────────────────────────────────────────
-interface LightboxProps {
-  tiles: typeof FALLBACK_TILES;
+function Lightbox({
+  items,
+  currentIndex,
+  onClose,
+  onNext,
+  onPrev,
+}: {
+  items: LightboxItem[];
   currentIndex: number;
   onClose: () => void;
   onNext: () => void;
   onPrev: () => void;
-}
+}) {
+  const current = items[currentIndex];
 
-function Lightbox({ tiles, currentIndex, onClose, onNext, onPrev }: LightboxProps) {
-  const current = tiles[currentIndex];
-
-  // Keyboard navigation
   const handleKey = useCallback(
-    (e: React.KeyboardEvent) => {
+    (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
       if (e.key === "ArrowRight") onNext();
       if (e.key === "ArrowLeft") onPrev();
@@ -44,19 +52,28 @@ function Lightbox({ tiles, currentIndex, onClose, onNext, onPrev }: LightboxProp
     [onClose, onNext, onPrev]
   );
 
+  useEffect(() => {
+    document.addEventListener("keydown", handleKey);
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.removeEventListener("keydown", handleKey);
+      document.body.style.overflow = "";
+    };
+  }, [handleKey]);
+
+  if (!current) return null;
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      transition={{ duration: 0.2 }}
-      className="fixed inset-0 z-50 bg-neutral-950/95 backdrop-blur-sm flex items-center justify-center"
+      transition={{ duration: 0.18 }}
+      className="fixed inset-0 z-50 bg-neutral-950/96 backdrop-blur-md flex items-center justify-center"
       onClick={onClose}
-      onKeyDown={handleKey}
-      tabIndex={0}
       role="dialog"
       aria-modal="true"
-      aria-label="Image viewer"
+      aria-label={`Image viewer: ${current.label}`}
     >
       {/* Close */}
       <button
@@ -70,32 +87,37 @@ function Lightbox({ tiles, currentIndex, onClose, onNext, onPrev }: LightboxProp
       {/* Prev */}
       <button
         onClick={(e) => { e.stopPropagation(); onPrev(); }}
-        className="absolute left-4 md:left-8 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors z-10"
+        className="absolute left-4 md:left-8 w-11 h-11 rounded-full bg-white/8 hover:bg-white/18 border border-white/10 hover:border-white/25 flex items-center justify-center text-white transition-all z-10"
         aria-label="Previous image"
       >
         <ChevronLeft size={20} />
       </button>
 
-      {/* Image area */}
+      {/* Main image */}
       <motion.div
         key={current.id}
-        initial={{ opacity: 0, scale: 0.96 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.2 }}
-        className="relative mx-16 md:mx-24 max-w-2xl w-full"
+        initial={{ opacity: 0, scale: 0.94, y: 8 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        exit={{ opacity: 0, scale: 0.94 }}
+        transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
+        className="relative mx-16 md:mx-24 w-full max-w-3xl"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className={`aspect-[4/3] rounded-2xl overflow-hidden flex items-center justify-center ${current.bg}`}>
-          <div className="text-center">
-            <span className="text-8xl block mb-4">{current.emoji}</span>
-            <p className="text-lg font-semibold text-neutral-700">{current.label}</p>
-          </div>
+        <div className="relative w-full rounded-2xl overflow-hidden shadow-2xl bg-neutral-800" style={{ aspectRatio: "4/3" }}>
+          <Image
+            src={current.img}
+            alt={current.label}
+            fill
+            className="object-cover"
+            sizes="(max-width: 768px) 90vw, 70vw"
+            priority
+          />
         </div>
         {/* Caption */}
         <div className="mt-4 text-center">
-          <p className="text-white font-medium">{current.label}</p>
-          <p className="text-white/40 text-sm mt-1">
-            {currentIndex + 1} / {tiles.length} · {current.category}
+          <p className="text-sm font-semibold text-white">{current.label}</p>
+          <p className="text-xs text-white/35 mt-1 font-light">
+            {currentIndex + 1} / {items.length} · {current.category}
           </p>
         </div>
       </motion.div>
@@ -103,22 +125,20 @@ function Lightbox({ tiles, currentIndex, onClose, onNext, onPrev }: LightboxProp
       {/* Next */}
       <button
         onClick={(e) => { e.stopPropagation(); onNext(); }}
-        className="absolute right-4 md:right-8 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors z-10"
+        className="absolute right-4 md:right-8 w-11 h-11 rounded-full bg-white/8 hover:bg-white/18 border border-white/10 hover:border-white/25 flex items-center justify-center text-white transition-all z-10"
         aria-label="Next image"
       >
         <ChevronRight size={20} />
       </button>
 
-      {/* Dot indicators */}
-      <div className="absolute bottom-5 left-1/2 -translate-x-1/2 flex gap-1.5">
-        {tiles.map((_, i) => (
-          <button
+      {/* Dot strip */}
+      <div className="absolute bottom-5 left-1/2 -translate-x-1/2 flex gap-1.5 z-10">
+        {items.map((_, i) => (
+          <div
             key={i}
-            onClick={(e) => { e.stopPropagation(); }}
-            className={`h-1.5 rounded-full transition-all duration-300 ${
-              i === currentIndex ? "w-6 bg-green-400" : "w-1.5 bg-white/25"
+            className={`rounded-full transition-all duration-300 ${
+              i === currentIndex ? "w-5 h-1.5 bg-green-400" : "w-1.5 h-1.5 bg-white/20"
             }`}
-            aria-label={`Go to image ${i + 1}`}
           />
         ))}
       </div>
@@ -126,7 +146,7 @@ function Lightbox({ tiles, currentIndex, onClose, onNext, onPrev }: LightboxProp
   );
 }
 
-// ─── Real image tile (when Sanity data exists) ────────────────────────────────
+// ─── Real Sanity tile ─────────────────────────────────────────────────────────
 function RealTile({ item, onClick }: { item: GalleryItem; onClick: () => void }) {
   const src = urlFor(item.image).url();
   return (
@@ -135,64 +155,60 @@ function RealTile({ item, onClick }: { item: GalleryItem; onClick: () => void })
       whileInView={{ opacity: 1, scale: 1 }}
       viewport={{ once: true }}
       transition={{ duration: 0.4 }}
-      className="relative aspect-square rounded-2xl overflow-hidden group cursor-pointer"
+      className="relative aspect-square rounded-2xl overflow-hidden group cursor-zoom-in bg-neutral-100"
       onClick={onClick}
     >
-      {src ? (
+      {src && (
         <Image
           src={src}
           alt={item.image.alt ?? item.title}
           fill
-          sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+          sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw"
           className="object-cover transition-transform duration-500 group-hover:scale-105"
         />
-      ) : (
-        <div className="absolute inset-0 bg-neutral-100" />
       )}
-      <div className="absolute inset-0 bg-neutral-950/0 group-hover:bg-neutral-950/50 transition-all duration-300 flex items-center justify-center">
-        <ZoomIn size={24} className="text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+      <div className="absolute inset-0 bg-neutral-950/0 group-hover:bg-neutral-950/45 transition-all duration-300 flex items-center justify-center">
+        <ZoomIn size={22} className="text-white opacity-0 group-hover:opacity-100 scale-75 group-hover:scale-100 transition-all duration-300" />
       </div>
-      <div className="absolute bottom-0 left-0 right-0 p-3 translate-y-2 opacity-0 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
+      <div className="absolute bottom-0 inset-x-0 p-3 translate-y-1 opacity-0 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
         <p className="text-xs font-semibold text-white truncate">{item.title}</p>
-        <p className="text-[10px] text-white/60 capitalize">{item.category}</p>
+        <p className="text-[10px] text-white/55 capitalize">{item.category}</p>
       </div>
     </motion.div>
   );
 }
 
-// ─── Placeholder tile ─────────────────────────────────────────────────────────
-function PlaceholderTile({
-  tile,
-  index,
-  onClick,
-}: {
-  tile: (typeof FALLBACK_TILES)[0];
-  index: number;
-  onClick: () => void;
-}) {
+// ─── Stock photo tile ─────────────────────────────────────────────────────────
+function StockTile({ tile, index, onClick }: { tile: FallbackTile; index: number; onClick: () => void }) {
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.97 }}
       whileInView={{ opacity: 1, scale: 1 }}
       viewport={{ once: true }}
-      transition={{ delay: index * 0.05, duration: 0.4 }}
+      transition={{ delay: index * 0.04, duration: 0.4 }}
       onClick={onClick}
-      className={`relative aspect-square rounded-2xl overflow-hidden group cursor-pointer flex items-center justify-center ${tile.bg}`}
+      className="relative aspect-square rounded-2xl overflow-hidden group cursor-zoom-in bg-neutral-100"
     >
-      <div className="text-center transition-transform duration-300 group-hover:scale-110 select-none">
-        <span className="text-5xl block mb-1.5">{tile.emoji}</span>
-        <span className="text-xs font-medium text-neutral-500 px-2">{tile.label}</span>
+      <Image
+        src={tile.img}
+        alt={tile.label}
+        fill
+        sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw"
+        className="object-cover transition-transform duration-500 group-hover:scale-105"
+      />
+      {/* Permanent light overlay */}
+      <div className="absolute inset-0 bg-neutral-950/10" />
+      {/* Hover overlay */}
+      <div className="absolute inset-0 bg-neutral-950/0 group-hover:bg-neutral-950/40 transition-all duration-300 flex items-center justify-center">
+        <ZoomIn size={20} className="text-white opacity-0 group-hover:opacity-100 scale-75 group-hover:scale-100 transition-all duration-300" />
       </div>
       {/* Category badge */}
-      <span className="absolute top-3 right-3 text-[10px] font-semibold text-neutral-500 bg-white/80 backdrop-blur-sm px-2.5 py-1 rounded-full border border-white">
+      <span className="absolute top-2.5 left-2.5 text-[10px] font-semibold text-white bg-neutral-950/55 backdrop-blur-sm px-2 py-0.5 rounded-full">
         {tile.category}
       </span>
-      {/* Hover overlay */}
-      <div className="absolute inset-0 bg-neutral-950/0 group-hover:bg-neutral-950/10 transition-all duration-300 rounded-2xl flex items-end justify-center pb-4">
-        <ZoomIn
-          size={16}
-          className="text-neutral-600 opacity-0 group-hover:opacity-60 transition-opacity duration-300"
-        />
+      {/* Caption on hover */}
+      <div className="absolute bottom-0 inset-x-0 p-3 translate-y-1 opacity-0 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
+        <p className="text-xs font-semibold text-white truncate">{tile.label}</p>
       </div>
     </motion.div>
   );
@@ -209,29 +225,34 @@ export default function FoodGalleryGrid({ items }: FoodGalleryGridProps) {
   const [activeFilter, setActiveFilter] = useState("All");
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
-  // For real data — filter by category
   const filteredReal = hasRealData
-    ? activeFilter === "All"
-      ? items
-      : items.filter((i) => i.category === activeFilter.toLowerCase())
+    ? activeFilter === "All" ? items : items.filter((i) => i.category === activeFilter.toLowerCase())
     : [];
 
-  // For placeholder data
-  const filteredPlaceholder =
-    activeFilter === "All"
-      ? FALLBACK_TILES
-      : FALLBACK_TILES.filter((t) => t.category === activeFilter);
+  const filteredFallback =
+    activeFilter === "All" ? FALLBACK_TILES : FALLBACK_TILES.filter((t) => t.category === activeFilter);
 
-  const displayTiles = hasRealData ? filteredReal : filteredPlaceholder;
+  const displayItems = hasRealData ? filteredReal : filteredFallback;
 
-  const openLightbox = (index: number) => setLightboxIndex(index);
+  // Build normalised lightbox items from whichever source
+  const lightboxItems: LightboxItem[] = hasRealData
+    ? filteredReal.map((item) => ({
+        id: item._id,
+        label: item.title,
+        category: item.category,
+        img: urlFor(item.image).url(),
+      }))
+    : filteredFallback.map((t) => ({
+        id: t.id,
+        label: t.label,
+        category: t.category,
+        img: t.img,
+      }));
+
+  const openLightbox = (i: number) => setLightboxIndex(i);
   const closeLightbox = () => setLightboxIndex(null);
-  const nextImage = () =>
-    setLightboxIndex((i) => (i === null ? 0 : (i + 1) % displayTiles.length));
-  const prevImage = () =>
-    setLightboxIndex((i) =>
-      i === null ? 0 : (i - 1 + displayTiles.length) % displayTiles.length
-    );
+  const nextImage = () => setLightboxIndex((i) => (i === null ? 0 : (i + 1) % displayItems.length));
+  const prevImage = () => setLightboxIndex((i) => i === null ? 0 : (i - 1 + displayItems.length) % displayItems.length);
 
   return (
     <section className="py-24 md:py-28 bg-white overflow-hidden">
@@ -260,7 +281,7 @@ export default function FoodGalleryGrid({ items }: FoodGalleryGridProps) {
           </p>
         </motion.div>
 
-        {/* Category filter pills */}
+        {/* Filter pills */}
         <div className="flex flex-wrap gap-2 mb-8">
           {PHOTO_CATEGORIES.map((cat) => (
             <button
@@ -278,35 +299,21 @@ export default function FoodGalleryGrid({ items }: FoodGalleryGridProps) {
         </div>
 
         {/* Grid */}
-        <motion.div
-          layout
-          className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3"
-        >
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3">
           <AnimatePresence>
             {hasRealData
-              ? (filteredReal as GalleryItem[]).map((item, i) => (
-                  <RealTile
-                    key={item._id}
-                    item={item}
-                    onClick={() => openLightbox(i)}
-                  />
+              ? filteredReal.map((item, i) => (
+                  <RealTile key={item._id} item={item} onClick={() => openLightbox(i)} />
                 ))
-              : filteredPlaceholder.map((tile, i) => (
-                  <PlaceholderTile
-                    key={tile.id}
-                    tile={tile}
-                    index={i}
-                    onClick={() => openLightbox(i)}
-                  />
+              : filteredFallback.map((tile, i) => (
+                  <StockTile key={tile.id} tile={tile} index={i} onClick={() => openLightbox(i)} />
                 ))}
           </AnimatePresence>
-        </motion.div>
+        </div>
 
-        {displayTiles.length === 0 && (
+        {displayItems.length === 0 && (
           <div className="py-16 text-center">
-            <p className="text-neutral-400 font-light text-sm">
-              No photos in this category yet.
-            </p>
+            <p className="text-neutral-400 font-light text-sm">No photos in this category yet.</p>
           </div>
         )}
       </div>
@@ -315,15 +322,7 @@ export default function FoodGalleryGrid({ items }: FoodGalleryGridProps) {
       <AnimatePresence>
         {lightboxIndex !== null && (
           <Lightbox
-            tiles={hasRealData
-              ? filteredReal.map((item) => ({
-                  id: item._id,
-                  emoji: "🍽️",
-                  label: item.title,
-                  category: item.category,
-                  bg: "bg-neutral-100",
-                }))
-              : filteredPlaceholder}
+            items={lightboxItems}
             currentIndex={lightboxIndex}
             onClose={closeLightbox}
             onNext={nextImage}

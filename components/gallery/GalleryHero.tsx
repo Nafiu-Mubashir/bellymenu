@@ -3,6 +3,8 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { ChevronRight, Images } from "lucide-react";
+import HeroBackground from "@/components/ui/HeroBackground";
+import { IMAGES } from "@/app/lib/images";
 
 interface GalleryHeroProps {
   totalCount: number;
@@ -11,18 +13,26 @@ interface GalleryHeroProps {
 export default function GalleryHero({ totalCount }: GalleryHeroProps) {
   return (
     <section className="relative pt-32 pb-20 bg-neutral-950 overflow-hidden">
-      {/* Glow */}
+      {/* Real event photo behind the hero */}
+      <HeroBackground
+        src={IMAGES.hero.gallery}
+        overlayOpacity={0.68}
+        greenTint={0.06}
+        priority
+      />
+
+      {/* Decorative glows — z-10 to sit above the photo */}
       <div
-        className="pointer-events-none absolute -top-10 left-1/2 -translate-x-1/2 w-[900px] h-[420px] rounded-full bg-green-700/12 blur-[130px]"
+        className="pointer-events-none absolute -top-10 left-1/2 -translate-x-1/2 w-[900px] h-[420px] rounded-full bg-green-700/12 blur-[130px] z-10"
         aria-hidden="true"
       />
       <div
-        className="pointer-events-none absolute bottom-0 -right-32 w-[400px] h-[400px] rounded-full bg-emerald-900/10 blur-3xl"
+        className="pointer-events-none absolute bottom-0 -right-32 w-[400px] h-[400px] rounded-full bg-emerald-900/10 blur-3xl z-10"
         aria-hidden="true"
       />
-      {/* Grid */}
+      {/* Grid texture */}
       <div
-        className="pointer-events-none absolute inset-0 opacity-[0.022]"
+        className="pointer-events-none absolute inset-0 opacity-[0.022] z-10"
         style={{
           backgroundImage:
             "linear-gradient(#fff 1px,transparent 1px),linear-gradient(90deg,#fff 1px,transparent 1px)",
@@ -30,12 +40,8 @@ export default function GalleryHero({ totalCount }: GalleryHeroProps) {
         }}
         aria-hidden="true"
       />
-      <div
-        className="pointer-events-none absolute inset-0 bg-gradient-to-b from-neutral-950/40 via-transparent to-neutral-950/70"
-        aria-hidden="true"
-      />
 
-      <div className="relative z-10 mx-auto max-w-7xl px-5 md:px-10">
+      <div className="relative z-20 mx-auto max-w-7xl px-5 md:px-10">
         {/* Breadcrumb */}
         <motion.nav
           initial={{ opacity: 0, y: -8 }}
@@ -80,14 +86,14 @@ export default function GalleryHero({ totalCount }: GalleryHeroProps) {
               initial={{ opacity: 0, y: 14 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.55, delay: 0.2 }}
-              className="text-base md:text-lg text-white/50 font-light leading-relaxed max-w-lg"
+              className="text-base md:text-lg text-white/55 font-light leading-relaxed max-w-lg"
             >
-              A collection of moments from the weddings, corporate events, celebrations,
-              and private dining experiences we've had the honour of catering across Nigeria.
+            {`  A collection of moments from the weddings, corporate events, celebrations,
+              and private dining experiences we've had the honour of catering across Nigeria.`}
             </motion.p>
           </div>
 
-          {/* Right: quick stats + CTA */}
+          {/* Right: quick stats + CTAs */}
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
