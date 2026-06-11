@@ -3,6 +3,8 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { ChevronRight, MessageCircle, Phone, Mail } from "lucide-react";
+import HeroBackground from "@/components/ui/HeroBackground";
+import { IMAGES } from "@/app/lib/images";
 
 const QUICK_CONTACTS = [
   {
@@ -37,18 +39,26 @@ const QUICK_CONTACTS = [
 export default function ContactHero() {
   return (
     <section className="relative pt-32 pb-20 bg-neutral-950 overflow-hidden">
-      {/* Glow */}
+      {/* Real photo background */}
+      <HeroBackground
+        src={IMAGES.hero.contact}
+        overlayOpacity={0.72}
+        greenTint={0.05}
+        priority
+      />
+
+      {/* Decorative glows — z-10 above photo layer */}
       <div
-        className="pointer-events-none absolute -top-10 left-1/2 -translate-x-1/2 w-[700px] h-[400px] rounded-full bg-green-700/14 blur-[120px]"
+        className="pointer-events-none absolute -top-10 left-1/2 -translate-x-1/2 w-[700px] h-[400px] rounded-full bg-green-700/14 blur-[120px] z-10"
         aria-hidden="true"
       />
       <div
-        className="pointer-events-none absolute bottom-0 -right-24 w-80 h-80 rounded-full bg-emerald-900/10 blur-3xl"
+        className="pointer-events-none absolute bottom-0 -right-24 w-80 h-80 rounded-full bg-emerald-900/10 blur-3xl z-10"
         aria-hidden="true"
       />
-      {/* Grid */}
+      {/* Grid texture */}
       <div
-        className="pointer-events-none absolute inset-0 opacity-[0.022]"
+        className="pointer-events-none absolute inset-0 opacity-[0.022] z-10"
         style={{
           backgroundImage:
             "linear-gradient(#fff 1px,transparent 1px),linear-gradient(90deg,#fff 1px,transparent 1px)",
@@ -56,12 +66,8 @@ export default function ContactHero() {
         }}
         aria-hidden="true"
       />
-      <div
-        className="pointer-events-none absolute inset-0 bg-gradient-to-b from-neutral-950/40 via-transparent to-neutral-950/70"
-        aria-hidden="true"
-      />
 
-      <div className="relative z-10 mx-auto max-w-7xl px-5 md:px-10">
+      <div className="relative z-20 mx-auto max-w-7xl px-5 md:px-10">
         {/* Breadcrumb */}
         <motion.nav
           initial={{ opacity: 0, y: -8 }}
@@ -105,15 +111,15 @@ export default function ContactHero() {
               initial={{ opacity: 0, y: 14 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.55, delay: 0.2 }}
-              className="text-base md:text-lg text-white/50 font-light leading-relaxed"
+              className="text-base md:text-lg text-white/55 font-light leading-relaxed"
             >
-             {` Whether you're ready to book, still exploring, or just have a
+              {`Whether you're ready to book, still exploring, or just have a
               question — our team is always happy to chat. Reach us any way
               that suits you.`}
             </motion.p>
           </div>
 
-          {/* Right: quick contact cards */}
+          {/* Right: quick contact pills */}
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
@@ -132,16 +138,19 @@ export default function ContactHero() {
                 whileHover={{ x: 4 }}
                 className={`flex items-center gap-4 border rounded-xl px-5 py-3.5 transition-all duration-200 group ${bg}`}
               >
-                <div className={`shrink-0 ${color}`}>
+                <div className={`flex-shrink-0 ${color}`}>
                   <Icon size={18} />
                 </div>
                 <div className="min-w-0">
-                  <p className="text-xs font-semibold text-gray-500 tracking-wide uppercase">{label}</p>
-                  <p className="text-sm font-medium text-gray-500 group-hover:text-gray-400 truncate transition-colors">
+                  <p className="text-xs font-semibold text-gray-400 tracking-wide uppercase">{label}</p>
+                  <p className="text-sm font-medium text-gray-500 group-hover:text-gray-700 truncate transition-colors">
                     {value}
                   </p>
                 </div>
-                <ChevronRight size={13} className="ml-auto text-gray-500 transition-colors shrink-0" />
+                <ChevronRight
+                  size={13}
+                  className="ml-auto text-gray-500 group-hover:text-gray-500 transition-colors shrink-0"
+                />
               </motion.a>
             ))}
           </motion.div>

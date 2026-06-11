@@ -72,14 +72,18 @@ function buildAdminEmail(data: BookingFormData): string {
         </td></tr>
 
         <!-- Message -->
-        ${data.message ? `
+        ${
+          data.message
+            ? `
         <tr><td style="padding:24px 32px 0">
           <p style="margin:0 0 12px;font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#9ca3af">Additional Notes</p>
           <div style="background:#f9fafb;border:1px solid #f3f4f6;border-radius:10px;padding:16px;font-size:14px;color:#374151;line-height:1.7">
             ${data.message.replace(/\n/g, "<br>")}
           </div>
         </td></tr>
-        ` : ""}
+        `
+            : ""
+        }
 
         <!-- Action buttons -->
         <tr><td style="padding:28px 32px">
@@ -174,15 +178,20 @@ function buildClientEmail(data: BookingFormData): string {
           <!-- What happens next -->
           <div style="background:#f9fafb;border-radius:12px;padding:20px;border:1px solid #f3f4f6">
             <p style="margin:0 0 14px;font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#9ca3af">What Happens Next</p>
-            ${["Our team reviews your request and prepares a custom proposal",
-               "We contact you within 24 hours via phone or email",
-               "We walk you through menu options and pricing together",
-               "You confirm the booking — and we start planning your event!"]
-              .map((s, i) => `
+            ${[
+              "Our team reviews your request and prepares a custom proposal",
+              "We contact you within 24 hours via phone or email",
+              "We walk you through menu options and pricing together",
+              "You confirm the booking — and we start planning your event!",
+            ]
+              .map(
+                (s, i) => `
             <div style="display:flex;align-items:flex-start;gap:12px;margin-bottom:${i < 3 ? "10px" : "0"}">
               <div style="min-width:22px;height:22px;background:#16a34a;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;margin-top:1px">${i + 1}</div>
               <p style="margin:0;font-size:13px;color:#4b5563;line-height:1.6">${s}</p>
-            </div>`).join("")}
+            </div>`,
+              )
+              .join("")}
           </div>
         </td></tr>
 
@@ -190,7 +199,7 @@ function buildClientEmail(data: BookingFormData): string {
         <tr>
           <td style="background:#f9fafb;padding:20px 32px;border-top:1px solid #f3f4f6;text-align:center">
             <p style="margin:0 0 6px;font-size:13px;font-weight:600;color:#111827">Bellymenu Kitchen</p>
-            <p style="margin:0;font-size:12px;color:#9ca3af">Abuja, Nigeria · hello@bellymenukitchen.com</p>
+            <p style="margin:0;font-size:12px;color:#9ca3af">Lagos, Nigeria · hello@bellymenukitchen.com</p>
           </td>
         </tr>
 
@@ -209,11 +218,17 @@ export async function POST(request: NextRequest) {
 
     // Server-side validation
     if (!fullName || !email || !phone || !eventType || !guestCount) {
-      return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
+      return NextResponse.json(
+        { error: "Missing required fields" },
+        { status: 400 },
+      );
     }
 
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      return NextResponse.json({ error: "Invalid email address" }, { status: 400 });
+      return NextResponse.json(
+        { error: "Invalid email address" },
+        { status: 400 },
+      );
     }
 
     // ── Send via Resend ──────────────────────────────────────────────────────
@@ -226,33 +241,38 @@ export async function POST(request: NextRequest) {
       const { Resend } = await import("resend");
       const resend = new Resend(RESEND_API_KEY);
 
-      const fromEmail = process.env.RESEND_FROM_EMAIL ?? "noreply@bellymenukitchen.com";
-      const toEmail   = process.env.BOOKING_EMAIL      ?? "hello@bellymenukitchen.com";
+      const fromEmail =
+        process.env.RESEND_FROM_EMAIL ?? "noreply@bellymenukitchen.com";
+      const toEmail = process.env.BOOKING_EMAIL ?? "hello@bellymenukitchen.com";
 
       // Fire both emails in parallel
       await Promise.all([
         // Admin notification
         resend.emails.send({
-          from:    `Bellymenu Website <${fromEmail}>`,
-          to:      [toEmail],
+          from: `Bellymenu Website <${fromEmail}>`,
+          to: [toEmail],
           replyTo: email,
           subject: `🍽️ New Quote Request — ${eventType} from ${fullName}`,
-          html:    buildAdminEmail(body),
+          html: buildAdminEmail(body),
         }),
         // Client confirmation
         resend.emails.send({
-          from:    `Bellymenu Kitchen <${fromEmail}>`,
-          to:      [email],
+          from: `Bellymenu Kitchen <${fromEmail}>`,
+          to: [email],
           subject: "We've received your request — Bellymenu Kitchen",
-          html:    buildClientEmail(body),
+          html: buildClientEmail(body),
         }),
       ]);
     } else {
       // Dev fallback: log to console
       console.log("[Booking Request — no RESEND_API_KEY set]", {
-        fullName, email, phone, eventType,
+        fullName,
+        email,
+        phone,
+        eventType,
         eventDate: body.eventDate,
-        guestCount, location: body.location,
+        guestCount,
+        location: body.location,
         budget: body.budget,
         services: body.services,
       });
@@ -261,6 +281,9 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ success: true });
   } catch (err) {
     console.error("[Booking API Error]", err);
-    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Internal server error" },
+      { status: 500 },
+    );
   }
 }

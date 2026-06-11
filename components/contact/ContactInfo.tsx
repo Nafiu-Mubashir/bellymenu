@@ -1,11 +1,13 @@
 "use client";
 
+import Image from "next/image";
 import { motion } from "framer-motion";
 import {
   MapPin, Phone, Mail, Clock,
-   MessageCircle,
+  MessageCircle, ChevronRight,
 } from "lucide-react";
-import { FaInstagram, FaFacebook } from "react-icons/fa";
+import { FaFacebook, FaInstagram } from "react-icons/fa";
+import { IMAGES } from "@/app/lib/images";
 
 interface InfoItem {
   icon: React.ElementType;
@@ -20,7 +22,7 @@ const INFO_ITEMS: InfoItem[] = [
   {
     icon: MapPin,
     label: "Location",
-    lines: ["Abuja, FCT, Nigeria", "Available nationwide"],
+    lines: ["Lagos, Epe, Nigeria", "Available nationwide"],
     iconColor: "text-green-600",
     iconBg: "bg-green-50",
   },
@@ -80,20 +82,54 @@ export default function ContactInfo() {
   return (
     <div className="space-y-5">
 
-      {/* Contact details card */}
+      {/* ── Team photo card ────────────────────────────────────────────────── */}
+      {/* A warm, human touch at the top of the sidebar — builds trust before
+          the user has even typed a word */}
       <motion.div
         initial={{ opacity: 0, y: 16 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.5 }}
+        className="relative rounded-2xl overflow-hidden bg-neutral-900 h-44"
+      >
+        <Image
+          src={IMAGES.about.teamWorking}
+          alt="Bellymenu Kitchen team preparing food"
+          fill
+          className="object-cover opacity-75"
+          sizes="(max-width: 1024px) 100vw, 33vw"
+        />
+        {/* Bottom gradient + text */}
+        <div className="absolute inset-0 bg-gradient-to-t from-neutral-950/80 via-neutral-950/20 to-transparent" />
+        <div className="absolute bottom-4 left-5 right-5">
+          <p className="font-playfair text-base font-semibold text-white leading-snug">
+            Real people,{" "}
+            <em className="not-italic text-green-400">real replies</em>
+          </p>
+          <p className="text-xs text-white/50 font-light mt-1">
+           {" You'll hear from a team member — not a bot."}
+          </p>
+        </div>
+      </motion.div>
+
+      {/* ── Contact details ─────────────────────────────────────────────────── */}
+      <motion.div
+        initial={{ opacity: 0, y: 16 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5, delay: 0.04 }}
         className="bg-white border border-neutral-100 rounded-2xl p-6 shadow-sm divide-y divide-neutral-100"
       >
         {INFO_ITEMS.map(({ icon: Icon, label, lines, href, iconColor, iconBg }, i) => (
           <div
             key={label}
-            className={`flex items-start gap-4 py-4 ${i === 0 ? "pt-0" : ""} ${i === INFO_ITEMS.length - 1 ? "pb-0" : ""}`}
+            className={`flex items-start gap-4 py-4 ${i === 0 ? "pt-0" : ""} ${
+              i === INFO_ITEMS.length - 1 ? "pb-0" : ""
+            }`}
           >
-            <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${iconBg}`}>
+            <div
+              className={`w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 ${iconBg}`}
+            >
               <Icon size={17} className={iconColor} />
             </div>
             <div>
@@ -120,12 +156,12 @@ export default function ContactInfo() {
         ))}
       </motion.div>
 
-      {/* Social links */}
+      {/* ── Social links ─────────────────────────────────────────────────────── */}
       <motion.div
         initial={{ opacity: 0, y: 16 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        transition={{ duration: 0.5, delay: 0.06 }}
+        transition={{ duration: 0.5, delay: 0.08 }}
         className="bg-white border border-neutral-100 rounded-2xl p-6 shadow-sm"
       >
         <p className="text-xs font-semibold text-neutral-500 tracking-widest uppercase mb-4">
@@ -140,7 +176,7 @@ export default function ContactInfo() {
               rel="noopener noreferrer"
               className={`flex items-center gap-3.5 border rounded-xl px-4 py-3 transition-all duration-200 group ${bg}`}
             >
-              <Icon size={17} className={`${color} shrink-0`} />
+              <Icon size={17} className={`${color} flex-shrink-0`} />
               <div className="min-w-0">
                 <p className="text-xs font-semibold text-neutral-700">{label}</p>
                 <p className="text-xs text-neutral-500 font-light">{handle}</p>
@@ -150,68 +186,73 @@ export default function ContactInfo() {
         </div>
       </motion.div>
 
-      {/* Map embed */}
+      {/* ── Map ──────────────────────────────────────────────────────────────── */}
       <motion.div
         initial={{ opacity: 0, y: 16 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        transition={{ duration: 0.5, delay: 0.1 }}
+        transition={{ duration: 0.5, delay: 0.12 }}
         className="bg-white border border-neutral-100 rounded-2xl overflow-hidden shadow-sm"
       >
+        {/* Map header */}
         <div className="px-5 pt-4 pb-3 border-b border-neutral-100 flex items-center gap-2">
           <MapPin size={14} className="text-green-600" />
-          <p className="text-xs font-semibold text-neutral-700">Abuja, Nigeria</p>
+          <p className="text-xs font-semibold text-neutral-700">Lagos, Nigeria</p>
         </div>
-        {/* Decorative map placeholder — replace with real embed */}
-        <div className="relative h-48 bg-neutral-50 flex flex-col items-center justify-center gap-2 overflow-hidden">
-          {/* Subtle map grid */}
-          <div
-            className="absolute inset-0 opacity-20"
-            style={{
-              backgroundImage:
-                "linear-gradient(#d1fae5 1px,transparent 1px),linear-gradient(90deg,#d1fae5 1px,transparent 1px)",
-              backgroundSize: "28px 28px",
-            }}
-            aria-hidden="true"
-          />
-          <div className="relative z-10 flex flex-col items-center gap-1.5">
-            <div className="w-8 h-8 rounded-full bg-green-600 flex items-center justify-center shadow-lg shadow-green-200">
-              <MapPin size={15} fill="white" className="text-white" />
-            </div>
-            <p className="text-xs font-semibold text-neutral-700">Abuja, FCT</p>
-            <p className="text-[11px] text-neutral-400 font-light">Nigeria</p>
-          </div>
-          {/*
-            To embed a real Google Map replace the div above with:
+
+        {/* ── Map area ──────────────────────────────────────────────────────
+            OPTION A (current): Static map screenshot from Unsplash.
+            OPTION B (production): Replace <Image> with a real Google Maps
+            <iframe> embed — paste your embed URL from:
+            Google Maps → Share → Embed a map → copy the src="…" value
+
             <iframe
               src="https://www.google.com/maps/embed?pb=YOUR_EMBED_URL"
-              width="100%" height="192" style={{border:0}}
-              allowFullScreen loading="lazy"
+              width="100%"
+              height="192"
+              style={{ border: 0 }}
+              allowFullScreen
+              loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
-              title="Bellymenu Kitchen location"
+              title="Bellymenu Kitchen location — Lagos, Nigeria"
             />
-          */}
+        ─────────────────────────────────────────────────────────────────── */}
+        <div className="relative h-48 overflow-hidden bg-neutral-100">
+          <Image
+            src={IMAGES.contact.mapPreview}
+            alt="Map showing Lagos, Nigeria"
+            fill
+            className="object-cover"
+            sizes="(max-width: 1024px) 100vw, 33vw"
+          />
+          {/* Green pin overlay */}
+          <div className="absolute inset-0 flex items-center justify-center">
+            <div className="relative">
+              {/* Pulse ring */}
+              <div className="absolute -inset-3 rounded-full bg-green-500/20 animate-ping" />
+              <div className="w-8 h-8 rounded-full bg-green-600 shadow-lg shadow-green-900/40 flex items-center justify-center">
+                <MapPin size={15} fill="white" className="text-white" />
+              </div>
+            </div>
+          </div>
+          {/* Subtle vignette so pin pops */}
+          <div className="absolute inset-0 bg-gradient-to-t from-white/10 to-transparent pointer-events-none" />
         </div>
+
+        {/* Map footer */}
         <div className="px-5 py-3">
           <a
-            href="https://maps.google.com/?q=Abuja,Nigeria"
+            href="https://maps.google.com/?q=Lagos+FCT+Nigeria"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-xs font-semibold text-green-600 hover:text-green-700 flex items-center gap-1.5 transition-colors"
+            className="flex items-center gap-1.5 text-xs font-semibold text-green-600 hover:text-green-700 transition-colors"
           >
             Open in Google Maps
             <ChevronRight size={12} />
           </a>
         </div>
       </motion.div>
-    </div>
-  );
-}
 
-function ChevronRight({ size, className }: { size: number; className?: string }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} className={className}>
-      <polyline points="9 18 15 12 9 6" />
-    </svg>
+    </div>
   );
 }

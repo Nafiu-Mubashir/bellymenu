@@ -9,11 +9,11 @@ interface OurStoryProps {
   data: AboutData | null;
 }
 
-const FALLBACK_STORY = `Bellymenu Kitchen started in 2016 in a modest kitchen in Abuja with a single mission: prove that caterers in Nigeria didn't have to choose between authentic flavour and professional presentation.
+const FALLBACK_STORY = `Bellymenu Kitchen started in 2016 in a modest kitchen in Lagos with a single mission: prove that caterers in Nigeria didn't have to choose between authentic flavour and professional presentation.
 
 Our founder, inspired by her grandmother's legendary cooking and her own hospitality management training, began cooking for family events. Word spread quickly — the food was different. It felt like home, but elevated. The portions were generous, the presentation was restaurant-quality, and the service was warm without being stiff.
 
-Within two years we had expanded to a full team of chefs, service staff, and event coordinators. By 2020 we were catering corporate events for multinationals, weddings for hundreds of guests, and intimate private dinners for some of Abuja's most discerning families.`;
+Within two years we had expanded to a full team of chefs, service staff, and event coordinators. By 2020 we were catering corporate events for multinationals, weddings for hundreds of guests, and intimate private dinners for some of Lagos's most discerning families.`;
 
 const FALLBACK_MISSION = `Our mission is simple: to make every meal we serve a memory worth keeping. We believe that great food isn't just about taste — it's about the care in sourcing ingredients, the discipline in preparation, and the warmth of how it's presented and served. When you hire Bellymenu Kitchen, you're not just getting a caterer. You're getting a partner who takes your event as seriously as you do.`;
 
@@ -26,7 +26,6 @@ export default function OurStory({ data }: OurStoryProps) {
     <section className="py-24 md:py-32 bg-white overflow-hidden">
       <div className="mx-auto max-w-7xl px-5 md:px-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-start">
-
           {/* Left: story text */}
           <motion.div
             initial={{ opacity: 0, x: -28 }}
@@ -65,7 +64,11 @@ export default function OurStory({ data }: OurStoryProps) {
             initial={{ opacity: 0, x: 28 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.65, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+            transition={{
+              duration: 0.65,
+              delay: 0.1,
+              ease: [0.22, 1, 0.36, 1],
+            }}
             className="lg:sticky lg:top-28 space-y-6"
           >
             {/* Real photo card */}
@@ -82,7 +85,8 @@ export default function OurStory({ data }: OurStoryProps) {
               {/* Caption */}
               <div className="absolute bottom-6 left-7 right-7">
                 <p className="font-playfair text-xl text-white font-semibold leading-snug">
-                 {` "Every plate tells a`}<br />
+                  {` "Every plate tells a`}
+                  <br />
                   <em className="not-italic text-green-400">{`story worth sharing."`}</em>
                 </p>
                 <p className="text-xs text-white/45 font-light mt-2 tracking-wide">

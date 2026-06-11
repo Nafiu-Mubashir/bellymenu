@@ -125,9 +125,9 @@ const FALLBACK_SERVICES: Record<string, ServiceDetail> = {
       },
       {
         _id: "f2",
-        question: "Do you cater outside Abuja?",
+        question: "Do you cater outside Lagos?",
         answer:
-          "Yes — we cater across Nigeria including Lagos, Port Harcourt, and Enugu. Travel and logistics fees apply for events outside Abuja.",
+          "Yes — we cater across Nigeria including Lagos, Port Harcourt, and Enugu. Travel and logistics fees apply for events outside Lagos.",
       },
       {
         _id: "f3",
@@ -489,7 +489,7 @@ const FALLBACK_SERVICES: Record<string, ServiceDetail> = {
       "Proposals & anniversaries a speciality",
       "Complete privacy guaranteed",
       "Chef consultation included",
-      "Available in Lagos & Abuja",
+      "Available in Lagos & Lagos",
     ],
     features: [
       "In-home personal chef experience",
@@ -589,7 +589,7 @@ const FALLBACK_SERVICES: Record<string, ServiceDetail> = {
         _id: "f3",
         question: "What cities do you offer private dining in?",
         answer:
-          "Currently Abuja and Lagos. We can travel to other cities for larger bookings — please enquire.",
+          "Currently Lagos. We can travel to other cities for larger bookings — please enquire.",
       },
       {
         _id: "f4",
@@ -636,7 +636,7 @@ const FALLBACK_SERVICES: Record<string, ServiceDetail> = {
     description:
       "Professional catering for gardens, fields, and open-air venues.",
     longDescription:
-      "The great outdoors deserves great food. Bellymenu Kitchen is fully equipped for outdoor catering — from compact garden parties to sprawling open-air weddings and festivals.\n\nWe bring our complete mobile kitchen setup, weather-proof serving stations, and an experienced crew to any location. Fresh, hot, beautifully presented — regardless of the setting.\n\nWhether you're planning a garden wedding in Abuja, a beach event in Lagos, or a corporate picnic in Port Harcourt, our team has the equipment and experience to make it exceptional.",
+      "The great outdoors deserves great food. Bellymenu Kitchen is fully equipped for outdoor catering — from compact garden parties to sprawling open-air weddings and festivals.\n\nWe bring our complete mobile kitchen setup, weather-proof serving stations, and an experienced crew to any location. Fresh, hot, beautifully presented — regardless of the setting.\n\nWhether you're planning a garden wedding in Lagos, a beach event in Lagos, or a corporate picnic in Port Harcourt, our team has the equipment and experience to make it exceptional.",
     highlights: [
       "Available nationwide",
       "Site visit consultation included",
@@ -734,7 +734,7 @@ const FALLBACK_SERVICES: Record<string, ServiceDetail> = {
       },
       {
         _id: "f2",
-        question: "Do you travel outside Abuja for outdoor events?",
+        question: "Do you travel outside Lagos for outdoor events?",
         answer:
           "Yes — we operate nationwide. Travel and logistics fees apply. Please enquire for a custom quote.",
       },
@@ -958,7 +958,7 @@ export async function generateStaticParams() {
 export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
- const { slug } = await params;  // add await
+  const { slug } = await params; // add await
 
   const { data } = await sanityFetch({
     query: SERVICE_DETAIL_QUERY,

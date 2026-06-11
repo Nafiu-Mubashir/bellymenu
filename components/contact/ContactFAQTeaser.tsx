@@ -6,7 +6,7 @@ import { HelpCircle, ChevronRight } from "lucide-react";
 
 const QUICK_FAQS = [
   "How far in advance should I book?",
-  "Do you cater outside Abuja?",
+  "Do you cater outside Lagos?",
   "Can you accommodate dietary requirements?",
   "How does your consultation process work?",
 ];
@@ -38,8 +38,13 @@ export default function ContactFAQTeaser() {
               </p>
               <ul className="space-y-2">
                 {QUICK_FAQS.map((q) => (
-                  <li key={q} className="flex items-start gap-2 text-sm text-neutral-600 font-light">
-                    <span className="text-green-500 mt-0.5 flex-shrink-0">›</span>
+                  <li
+                    key={q}
+                    className="flex items-start gap-2 text-sm text-neutral-600 font-light"
+                  >
+                    <span className="text-green-500 mt-0.5 flex-shrink-0">
+                      ›
+                    </span>
                     {q}
                   </li>
                 ))}
@@ -52,7 +57,10 @@ export default function ContactFAQTeaser() {
               className="group inline-flex items-center gap-2 bg-neutral-950 hover:bg-green-700 text-white px-7 py-3.5 rounded-full text-sm font-semibold tracking-wide transition-all hover:-translate-y-0.5 hover:shadow-lg flex-shrink-0 self-start md:self-center"
             >
               Visit our FAQ
-              <ChevronRight size={14} className="transition-transform group-hover:translate-x-1" />
+              <ChevronRight
+                size={14}
+                className="transition-transform group-hover:translate-x-1"
+              />
             </Link>
           </div>
         </motion.div>

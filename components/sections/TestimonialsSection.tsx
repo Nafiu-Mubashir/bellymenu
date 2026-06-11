@@ -25,7 +25,7 @@ const FALLBACK_TESTIMONIALS: Testimonial[] = [
     name: "Tunde Martins",
     initials: "TM",
     eventType: "Corporate Annual Dinner",
-    location: "Abuja",
+    location: "Lagos",
     year: "2024",
     quote:
       "We hired Bellymenu for our company's annual dinner. Professional, punctual, and the food was genuinely restaurant quality. The setup was beautiful and our entire team was thoroughly impressed. Highly recommended for any corporate event.",
@@ -36,7 +36,7 @@ const FALLBACK_TESTIMONIALS: Testimonial[] = [
     name: "Funmi Kadiri",
     initials: "FK",
     eventType: "Birthday Celebration",
-    location: "Abuja",
+    location: "Lagos",
     year: "2023",
     quote:
       "My daughter's 30th birthday party was absolutely magical, and a huge part of that was the food presentation. Everything was delicious and the service team was so professional and warm. Our guests are still talking about it!",
@@ -63,7 +63,9 @@ function StarRating({ rating }: { rating: number }) {
         <Star
           key={i}
           size={14}
-          className={i < rating ? "fill-amber-400 text-amber-400" : "text-neutral-200"}
+          className={
+            i < rating ? "fill-amber-400 text-amber-400" : "text-neutral-200"
+          }
         />
       ))}
     </div>
@@ -75,9 +77,13 @@ interface TestimonialsSectionProps {
   testimonials: Testimonial[] | null;
 }
 
-export default function TestimonialsSection({ testimonials }: TestimonialsSectionProps) {
+export default function TestimonialsSection({
+  testimonials,
+}: TestimonialsSectionProps) {
   const list =
-    testimonials && testimonials.length > 0 ? testimonials : FALLBACK_TESTIMONIALS;
+    testimonials && testimonials.length > 0
+      ? testimonials
+      : FALLBACK_TESTIMONIALS;
 
   const [active, setActive] = useState(0);
 
@@ -85,12 +91,17 @@ export default function TestimonialsSection({ testimonials }: TestimonialsSectio
   const next = () => setActive((p) => (p === list.length - 1 ? 0 : p + 1));
 
   return (
-    <section id="testimonials" className="py-24 md:py-32 bg-neutral-950 overflow-hidden">
+    <section
+      id="testimonials"
+      className="py-24 md:py-32 bg-neutral-950 overflow-hidden"
+    >
       {/* Decorative orb */}
-      <div className="pointer-events-none absolute right-0 top-1/2 w-96 h-96 rounded-full bg-green-700/10 blur-3xl" aria-hidden="true" />
+      <div
+        className="pointer-events-none absolute right-0 top-1/2 w-96 h-96 rounded-full bg-green-700/10 blur-3xl"
+        aria-hidden="true"
+      />
 
       <div className="mx-auto max-w-7xl px-5 md:px-10 relative">
-
         {/* Header row */}
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-14">
           <SectionHeading
@@ -133,7 +144,7 @@ export default function TestimonialsSection({ testimonials }: TestimonialsSectio
               <Quote size={28} className="text-green-500/60" />
               <StarRating rating={t.rating} />
               <p className="text-sm text-white/70 leading-relaxed font-light italic flex-1">
-               {` "${t.quote}"`}
+                {` "${t.quote}"`}
               </p>
               <div className="flex items-center gap-3 border-t border-white/8 pt-5">
                 <div className="w-10 h-10 rounded-full bg-green-900/60 flex items-center justify-center text-green-300 text-sm font-semibold shrink-0">
@@ -171,9 +182,12 @@ export default function TestimonialsSection({ testimonials }: TestimonialsSectio
                   {list[active].initials}
                 </div>
                 <div>
-                  <p className="text-sm font-semibold text-white">{list[active].name}</p>
+                  <p className="text-sm font-semibold text-white">
+                    {list[active].name}
+                  </p>
                   <p className="text-xs text-white/35 font-light">
-                    {list[active].eventType} · {list[active].location}, {list[active].year}
+                    {list[active].eventType} · {list[active].location},{" "}
+                    {list[active].year}
                   </p>
                 </div>
               </div>

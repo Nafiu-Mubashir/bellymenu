@@ -22,7 +22,7 @@ const FALLBACK_TEAM: TeamMember[] = [
   {
     name: "Fatima Garba",
     role: "Senior Chef — Continental",
-    bio: "Fatima brings continental culinary training from Lagos and Abuja's finest hotels to every Bellymenu spread. She specialises in fusion menus that honour both Nigerian and international palates.",
+    bio: "Fatima brings continental culinary training from Lagos and Lagos's finest hotels to every Bellymenu spread. She specialises in fusion menus that honour both Nigerian and international palates.",
     initials: "FG",
   },
   {
@@ -95,7 +95,8 @@ export default function TeamSection({
           {list.map((member, i) => {
             // Prefer real Sanity image → fall back to stock headshot
             const sanityUrl = member.image ? urlFor(member.image).url() : null;
-            const imgSrc = sanityUrl ?? STOCK_HEADSHOTS[i % STOCK_HEADSHOTS.length];
+            const imgSrc =
+              sanityUrl ?? STOCK_HEADSHOTS[i % STOCK_HEADSHOTS.length];
 
             return (
               <motion.div
@@ -155,7 +156,8 @@ export default function TeamSection({
           transition={{ delay: 0.5 }}
           className="mt-8 text-center text-xs text-white/20 font-light"
         >
-          Team photos are placeholders — upload real headshots in Sanity Studio → About → Team Members
+          Team photos are placeholders — upload real headshots in Sanity Studio
+          → About → Team Members
         </motion.p>
       </div>
     </section>

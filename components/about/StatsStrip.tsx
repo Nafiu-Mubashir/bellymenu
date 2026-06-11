@@ -11,10 +11,30 @@ interface Stat {
 }
 
 const STATS: Stat[] = [
-  { value: 500, suffix: "+", label: "Events Catered", description: "Weddings, parties, corporate dinners and more" },
-  { value: 98, suffix: "%", label: "Client Satisfaction", description: "Based on post-event feedback surveys" },
-  { value: 8, suffix: "+", label: "Years in Business", description: "Serving Nigeria's celebrations since 2016" },
-  { value: 20, suffix: "+", label: "Cities Served", description: "From Abuja to Lagos, PH and beyond" },
+  {
+    value: 500,
+    suffix: "+",
+    label: "Events Catered",
+    description: "Weddings, parties, corporate dinners and more",
+  },
+  {
+    value: 98,
+    suffix: "%",
+    label: "Client Satisfaction",
+    description: "Based on post-event feedback surveys",
+  },
+  {
+    value: 8,
+    suffix: "+",
+    label: "Years in Business",
+    description: "Serving Nigeria's celebrations since 2016",
+  },
+  {
+    value: 20,
+    suffix: "+",
+    label: "Cities Served",
+    description: "From Lagos to Lagos, PH and beyond",
+  },
 ];
 
 // Animated counter hook

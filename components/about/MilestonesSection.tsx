@@ -8,25 +8,32 @@ interface MilestonesSectionProps {
 }
 
 const FALLBACK_MILESTONES: Milestone[] = [
-  { year: "2016", label: "Founded in Abuja, catering first family events" },
-  { year: "2017", label: "Expanded to a 5-person team, first wedding contract" },
+  { year: "2016", label: "Founded in Lagos, catering first family events" },
+  {
+    year: "2017",
+    label: "Expanded to a 5-person team, first wedding contract",
+  },
   { year: "2018", label: "Launched corporate catering division" },
   { year: "2019", label: "Crossed 100 events milestone" },
   { year: "2020", label: "Adapted to intimate gatherings during the pandemic" },
-  { year: "2021", label: "Resumed full-scale operations, first Port Harcourt event" },
+  {
+    year: "2021",
+    label: "Resumed full-scale operations, first Port Harcourt event",
+  },
   { year: "2022", label: "Reached 300 events, expanded to Lagos market" },
   { year: "2023", label: "Launched private dining experience service" },
   { year: "2024", label: "500+ events, 98% client satisfaction rate" },
 ];
 
-export default function MilestonesSection({ milestones }: MilestonesSectionProps) {
+export default function MilestonesSection({
+  milestones,
+}: MilestonesSectionProps) {
   const list =
     milestones && milestones.length > 0 ? milestones : FALLBACK_MILESTONES;
 
   return (
     <section className="py-24 md:py-32 bg-neutral-50 overflow-hidden">
       <div className="mx-auto max-w-7xl px-5 md:px-10">
-
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -48,7 +55,10 @@ export default function MilestonesSection({ milestones }: MilestonesSectionProps
         {/* Timeline */}
         <div className="relative">
           {/* Vertical line — desktop only */}
-          <div className="hidden md:block absolute left-29.5 top-0 bottom-0 w-px bg-linear-to-b from-transparent via-green-200 to-transparent" aria-hidden="true" />
+          <div
+            className="hidden md:block absolute left-29.5 top-0 bottom-0 w-px bg-linear-to-b from-transparent via-green-200 to-transparent"
+            aria-hidden="true"
+          />
 
           <div className="space-y-0">
             {list.map((milestone, i) => (

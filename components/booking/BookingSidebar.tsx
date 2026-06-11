@@ -3,21 +3,42 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import {
-  Clock, CheckCircle2, MessageCircle,
-  Phone, Star, ChevronRight,
+  Clock,
+  CheckCircle2,
+  MessageCircle,
+  Phone,
+  Star,
+  ChevronRight,
 } from "lucide-react";
 
 const PROCESS_STEPS = [
-  { icon: "📋", title: "Submit your request",    desc: "Fill in the form with your event details." },
-  { icon: "📞", title: "We call you back",        desc: "A team member contacts you within 24 hours." },
-  { icon: "🍽️", title: "Custom proposal",        desc: "Receive a tailored menu and pricing proposal." },
-  { icon: "✅", title: "Confirm & we get cooking",desc: "Agree on the details and we handle everything." },
+  {
+    icon: "📋",
+    title: "Submit your request",
+    desc: "Fill in the form with your event details.",
+  },
+  {
+    icon: "📞",
+    title: "We call you back",
+    desc: "A team member contacts you within 24 hours.",
+  },
+  {
+    icon: "🍽️",
+    title: "Custom proposal",
+    desc: "Receive a tailored menu and pricing proposal.",
+  },
+  {
+    icon: "✅",
+    title: "Confirm & we get cooking",
+    desc: "Agree on the details and we handle everything.",
+  },
 ];
 
 const TESTIMONIAL = {
-  quote: "From the very first call to the last plate cleared — Bellymenu was exceptional. Booking was easy and the team really listened to what we wanted.",
+  quote:
+    "From the very first call to the last plate cleared — Bellymenu was exceptional. Booking was easy and the team really listened to what we wanted.",
   name: "Ngozi Adeleke",
-  event: "Wedding · Abuja, 2024",
+  event: "Wedding · Lagos, 2024",
   initials: "NA",
   rating: 5,
 };
@@ -27,7 +48,6 @@ export default function BookingSidebar() {
 
   return (
     <div className="space-y-5">
-
       {/* How it works */}
       <motion.div
         initial={{ opacity: 0, y: 16 }}
@@ -52,8 +72,12 @@ export default function BookingSidebar() {
                 )}
               </div>
               <div className="pb-1">
-                <p className="text-sm font-semibold text-neutral-800 leading-snug">{step.title}</p>
-                <p className="text-xs text-neutral-500 font-light mt-0.5 leading-relaxed">{step.desc}</p>
+                <p className="text-sm font-semibold text-neutral-800 leading-snug">
+                  {step.title}
+                </p>
+                <p className="text-xs text-neutral-500 font-light mt-0.5 leading-relaxed">
+                  {step.desc}
+                </p>
               </div>
             </div>
           ))}
@@ -72,7 +96,9 @@ export default function BookingSidebar() {
           <Clock size={20} className="text-green-600" />
         </div>
         <div>
-          <p className="text-sm font-semibold text-green-900">We respond within 24 hours</p>
+          <p className="text-sm font-semibold text-green-900">
+            We respond within 24 hours
+          </p>
           <p className="text-xs text-green-700/65 font-light mt-0.5">
             Often much sooner. Check WhatsApp too!
           </p>
@@ -95,12 +121,17 @@ export default function BookingSidebar() {
           <MessageCircle size={20} className="text-[#25D366]" />
         </div>
         <div className="flex-1">
-          <p className="text-sm font-semibold text-neutral-800">Prefer WhatsApp?</p>
+          <p className="text-sm font-semibold text-neutral-800">
+            Prefer WhatsApp?
+          </p>
           <p className="text-xs text-neutral-500 font-light mt-0.5">
             Chat with us directly — we reply fast.
           </p>
         </div>
-        <ChevronRight size={14} className="text-neutral-400 group-hover:text-[#25D366] transition-colors" />
+        <ChevronRight
+          size={14}
+          className="text-neutral-400 group-hover:text-[#25D366] transition-colors"
+        />
       </motion.a>
 
       {/* Phone */}
@@ -116,10 +147,17 @@ export default function BookingSidebar() {
           <Phone size={18} className="text-neutral-500" />
         </div>
         <div className="flex-1">
-          <p className="text-sm font-semibold text-neutral-800">Call us directly</p>
-          <p className="text-xs text-neutral-500 font-light mt-0.5">+234 801 234 5678</p>
+          <p className="text-sm font-semibold text-neutral-800">
+            Call us directly
+          </p>
+          <p className="text-xs text-neutral-500 font-light mt-0.5">
+            +234 801 234 5678
+          </p>
         </div>
-        <ChevronRight size={14} className="text-neutral-400 group-hover:text-neutral-600 transition-colors" />
+        <ChevronRight
+          size={14}
+          className="text-neutral-400 group-hover:text-neutral-600 transition-colors"
+        />
       </motion.a>
 
       {/* Testimonial pull-quote */}
@@ -144,8 +182,12 @@ export default function BookingSidebar() {
             {TESTIMONIAL.initials}
           </div>
           <div>
-            <p className="text-xs font-semibold text-white">{TESTIMONIAL.name}</p>
-            <p className="text-[10px] text-white/30 font-light">{TESTIMONIAL.event}</p>
+            <p className="text-xs font-semibold text-white">
+              {TESTIMONIAL.name}
+            </p>
+            <p className="text-[10px] text-white/30 font-light">
+              {TESTIMONIAL.event}
+            </p>
           </div>
         </div>
       </motion.div>
@@ -170,8 +212,14 @@ export default function BookingSidebar() {
             "Flexible dietary options",
             "Full setup & teardown included",
           ].map((item) => (
-            <li key={item} className="flex items-center gap-2.5 text-xs text-neutral-600 font-light">
-              <CheckCircle2 size={13} className="text-green-500 flex-shrink-0" />
+            <li
+              key={item}
+              className="flex items-center gap-2.5 text-xs text-neutral-600 font-light"
+            >
+              <CheckCircle2
+                size={13}
+                className="text-green-500 flex-shrink-0"
+              />
               {item}
             </li>
           ))}
