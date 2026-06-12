@@ -132,7 +132,7 @@ export default function GalleryPreview({ items }: GalleryPreviewProps) {
           </div>
           <Link
             href="/gallery"
-            className="inline-flex items-center gap-2 bg-neutral-950 hover:bg-green-700 text-white px-6 py-3 rounded-full text-sm font-semibold tracking-wide transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg shrink-0"
+            className="group inline-flex items-center gap-2 bg-neutral-950 hover:bg-green-700 text-white px-7 py-3.5 rounded-full text-sm font-semibold tracking-wide transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg w-1/2 md:w-auto"
           >
             View full gallery
             <ArrowRight size={14} />
