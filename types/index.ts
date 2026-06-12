@@ -55,6 +55,7 @@ export interface Service {
   slug: SanitySlug;
   order: number;
   heroTagline?: string;
+  coverImage?: SanityImage;
 }
 
 // ─── Testimonial ─────────────────────────────────────────────────────────────

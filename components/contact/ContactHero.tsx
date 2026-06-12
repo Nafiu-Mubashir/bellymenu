@@ -49,7 +49,7 @@ export default function ContactHero() {
 
       {/* Decorative glows — z-10 above photo layer */}
       <div
-        className="pointer-events-none absolute -top-10 left-1/2 -translate-x-1/2 w-[700px] h-[400px] rounded-full bg-green-700/14 blur-[120px] z-10"
+        className="pointer-events-none absolute -top-10 left-1/2 -translate-x-1/2 w-175 h-100 rounded-full bg-green-700/14 blur-[120px] z-10"
         aria-hidden="true"
       />
       <div
@@ -138,7 +138,7 @@ export default function ContactHero() {
                 whileHover={{ x: 4 }}
                 className={`flex items-center gap-4 border rounded-xl px-5 py-3.5 transition-all duration-200 group ${bg}`}
               >
-                <div className={`flex-shrink-0 ${color}`}>
+                <div className={`shrink-0 ${color}`}>
                   <Icon size={18} />
                 </div>
                 <div className="min-w-0">

@@ -1,9 +1,23 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import type { Service } from "@/types";
+import { IMAGES } from "@/app/lib/images";
+import { urlFor } from "@/sanity/lib/image";
+
+// ─── Fallback stock cover per service slug ────────────────────────────────────
+// Sanity: add a coverImage field to each service document to override these.
+const SERVICE_COVERS: Record<string, string> = {
+  "wedding-catering":    IMAGES.services.wedding,
+  "corporate-events":    IMAGES.services.corporate,
+  "parties":             IMAGES.services.parties,
+  "private-dining":      IMAGES.services.privateDining,
+  "outdoor-events":      IMAGES.services.outdoorEvents,
+  "cocktail-receptions": IMAGES.services.cocktail,
+};
 
 const FALLBACK_SERVICES: Service[] = [
   {
@@ -54,6 +68,7 @@ export default function ServicesGrid({ services }: ServicesGridProps) {
   return (
     <section className="py-20 md:py-28 bg-neutral-50">
       <div className="mx-auto max-w-7xl px-5 md:px-10">
+
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -79,55 +94,69 @@ export default function ServicesGrid({ services }: ServicesGridProps) {
 
         {/* Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-          {list.map((service, i) => (
-            <motion.div
-              key={service._id}
-              initial={{ opacity: 0, y: 28 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.15 }}
-              transition={{ delay: i * 0.07, duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-            >
-              <Link
-                href={`/services/${service.slug.current}`}
-                className="group relative flex flex-col h-full bg-white rounded-2xl border border-neutral-100 p-8 hover:border-green-200 hover:shadow-xl hover:shadow-green-50/80 transition-all duration-300 overflow-hidden"
+          {list.map((service, i) => {
+            // Prefer Sanity coverImage → then slug-matched stock → then services hero
+            const sanityUrl = service.coverImage ? urlFor(service.coverImage).url() : null;
+            const imgSrc = sanityUrl ?? SERVICE_COVERS[service.slug.current] ?? IMAGES.hero.services;
+
+            return (
+              <motion.div
+                key={service._id}
+                initial={{ opacity: 0, y: 28 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.15 }}
+                transition={{ delay: i * 0.07, duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
               >
-                {/* Top accent on hover */}
-                <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-green-400 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                {/* Bottom-right decorative blob */}
-                <div className="absolute -bottom-6 -right-6 w-24 h-24 rounded-full bg-green-50 opacity-0 group-hover:opacity-60 transition-opacity duration-500" />
+                <Link
+                  href={`/services/${service.slug.current}`}
+                  className="group relative flex flex-col h-full bg-white rounded-2xl border border-neutral-100 hover:border-green-200 hover:shadow-xl hover:shadow-green-50/80 transition-all duration-300 overflow-hidden"
+                >
+                  {/* ── Cover photo ── */}
+                  <div className="relative h-48 overflow-hidden bg-neutral-200">
+                    <Image
+                      src={imgSrc}
+                      alt={service.title}
+                      fill
+                      className="object-cover transition-transform duration-500 group-hover:scale-105"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    />
+                    {/* Gradient — fades to white card background below */}
+                    <div className="absolute inset-0 bg-linear-to-t from-white via-white/10 to-transparent" />
 
-                {/* Icon */}
-                <div className="w-14 h-14 rounded-2xl bg-green-50 group-hover:bg-green-100 flex items-center justify-center text-3xl mb-6 transition-colors duration-200 flex-shrink-0 relative z-10">
-                  {service.icon}
-                </div>
-
-                {/* Title */}
-                <h2 className="font-playfair text-xl font-semibold text-neutral-900 mb-2 leading-snug group-hover:text-green-800 transition-colors duration-200 relative z-10">
-                  {service.title}
-                </h2>
-
-                {/* Tagline */}
-                {service.heroTagline && (
-                  <p className="text-[11px] font-semibold text-green-600 tracking-widest uppercase mb-3 relative z-10">
-                    {service.heroTagline}
-                  </p>
-                )}
-
-                {/* Description */}
-                <p className="text-sm text-neutral-500 leading-relaxed font-light flex-1 mb-6 relative z-10">
-                  {service.description}
-                </p>
-
-                {/* CTA row */}
-                <div className="flex items-center justify-between relative z-10">
-                  <div className="flex items-center gap-2 text-xs font-semibold text-green-600 group-hover:text-green-700 tracking-wide uppercase">
-                    Explore service
-                    <ArrowRight size={13} className="transition-transform group-hover:translate-x-1.5 duration-200" />
+                    {/* Icon badge — floated bottom-left over the photo */}
+                    <div className="absolute bottom-3 left-4 w-11 h-11 rounded-xl bg-white/90 backdrop-blur-sm shadow-sm flex items-center justify-center text-2xl border border-white">
+                      {service.icon}
+                    </div>
                   </div>
-                </div>
-              </Link>
-            </motion.div>
-          ))}
+
+                  {/* ── Card body ── */}
+                  <div className="flex flex-col flex-1 p-6 pt-5">
+                    {/* Top accent line on hover */}
+                    <div className="absolute top-0 left-0 right-0 h-0.5 bg-linear-to-r from-transparent via-green-400 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+
+                    <h3 className="font-playfair text-xl font-semibold text-neutral-900 mb-1.5 leading-snug group-hover:text-green-800 transition-colors duration-200">
+                      {service.title}
+                    </h3>
+
+                    {service.heroTagline && (
+                      <p className="text-[11px] font-semibold text-green-600 tracking-widest uppercase mb-3">
+                        {service.heroTagline}
+                      </p>
+                    )}
+
+                    <p className="text-sm text-neutral-500 leading-relaxed font-light flex-1 mb-5">
+                      {service.description}
+                    </p>
+
+                    <div className="flex items-center gap-2 text-xs font-semibold text-green-600 group-hover:text-green-700 tracking-wide uppercase">
+                      Explore service
+                      <ArrowRight size={13} className="transition-transform group-hover:translate-x-1.5 duration-200" />
+                    </div>
+                  </div>
+                </Link>
+              </motion.div>
+            );
+          })}
         </div>
       </div>
     </section>

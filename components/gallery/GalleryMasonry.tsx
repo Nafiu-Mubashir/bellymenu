@@ -16,12 +16,12 @@ import { urlFor } from "@/sanity/lib/image";
 // ─── Fallback tiles — real Unsplash stock photos ──────────────────────────────
 // Replace by uploading galleryItem documents in Sanity Studio
 const FALLBACK_TILES = [
-  { _id: "f1",  title: "Grand Wedding Reception",  category: "wedding",   img: IMAGES.gallery.wedding1   },
+  { _id: "f1",  title: "Grand Wedding Reception",  category: "wedding",   img: IMAGES.gallery.wedding2   },
   { _id: "f2",  title: "Firewood Jollof Station",  category: "food",      img: IMAGES.gallery.food1      },
   { _id: "f3",  title: "Corporate Gala Dinner",    category: "corporate", img: IMAGES.gallery.corporate1 },
   { _id: "f4",  title: "Birthday Dessert Table",   category: "party",     img: IMAGES.gallery.party1     },
   { _id: "f5",  title: "Live Suya Station",        category: "food",      img: IMAGES.gallery.food2      },
-  { _id: "f6",  title: "Outdoor Garden Wedding",   category: "wedding",   img: IMAGES.gallery.outdoor1   },
+  { _id: "f6",  title: "Outdoor Garden Wedding",   category: "wedding",   img: IMAGES.gallery.party2   },
   { _id: "f7",  title: "Buffet Table Setup",       category: "setup",     img: IMAGES.gallery.setup1     },
   { _id: "f8",  title: "Cocktail Reception",       category: "party",     img: IMAGES.gallery.cocktail1  },
   { _id: "f9",  title: "Team Lunch Spread",        category: "corporate", img: IMAGES.gallery.corporate2 },
@@ -30,7 +30,7 @@ const FALLBACK_TILES = [
   { _id: "f12", title: "Anniversary Dinner",       category: "party",     img: IMAGES.gallery.party2     },
   { _id: "f13", title: "VIP Plating Setup",        category: "setup",     img: IMAGES.gallery.setup2     },
   { _id: "f14", title: "Egusi & Pounded Yam",      category: "food",      img: IMAGES.gallery.food4      },
-  { _id: "f15", title: "Award Ceremony Dinner",    category: "corporate", img: IMAGES.gallery.wedding2   },
+  { _id: "f15", title: "Award Ceremony Dinner",    category: "corporate", img: IMAGES.services.cocktail   },
   { _id: "f16", title: "Small Chops Platter",      category: "food",      img: IMAGES.gallery.cocktail2  },
   { _id: "f17", title: "Floral Table Setting",     category: "wedding",   img: IMAGES.gallery.wedding3   },
   { _id: "f18", title: "Drinks Bar Setup",         category: "setup",     img: IMAGES.gallery.setup3     },

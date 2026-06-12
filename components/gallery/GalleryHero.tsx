@@ -15,7 +15,7 @@ export default function GalleryHero({ totalCount }: GalleryHeroProps) {
     <section className="relative pt-32 pb-20 bg-neutral-950 overflow-hidden">
       {/* Real event photo behind the hero */}
       <HeroBackground
-        src={IMAGES.hero.gallery}
+        src={IMAGES.gallery.party1}
         overlayOpacity={0.68}
         greenTint={0.06}
         priority

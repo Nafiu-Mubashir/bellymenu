@@ -6,7 +6,7 @@ import { IMAGES } from "@/app/lib/images";
 
 const EVENT_TYPES = [
   {
-    img:         IMAGES.gallery.wedding1,
+    img:         IMAGES.services.wedding,
     label:       "Weddings",
     count:       "200+",
     description: "From intimate ceremonies to grand receptions",

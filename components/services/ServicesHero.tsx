@@ -3,11 +3,13 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { ChevronRight } from "lucide-react";
+import HeroBackground from "../ui/HeroBackground";
+import { IMAGES } from "@/app/lib/images";
 
 export default function ServicesHero() {
   return (
     <section className="relative pt-32 pb-20 bg-neutral-950 overflow-hidden">
-      <div className="pointer-events-none absolute -top-24 left-1/2 -translate-x-1/2 w-[700px] h-[400px] rounded-full bg-green-700/20 blur-[100px]" />
+      <div className="pointer-events-none absolute -top-24 left-1/2 -translate-x-1/2 w-175 h-100 rounded-full bg-green-700/20 blur-[100px]" />
       <div
         className="pointer-events-none absolute inset-0 opacity-[0.03]"
         style={{
@@ -16,7 +18,7 @@ export default function ServicesHero() {
           backgroundSize: "60px 60px",
         }}
       />
-
+<HeroBackground src={IMAGES.hero.services} />
       <div className="relative z-10 mx-auto max-w-7xl px-5 md:px-10 text-center">
         {/* Breadcrumb */}
         <motion.nav

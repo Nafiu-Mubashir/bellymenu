@@ -12,11 +12,11 @@ import { urlFor } from "@/sanity/lib/image";
 // ─── Fallback stock-photo tiles ───────────────────────────────────────────────
 // Real Unsplash photos — shown until galleryItem docs are added in Sanity.
 const FALLBACK_ITEMS = [
-  { _id: "1", title: "Wedding Banquet",   category: "wedding",   img: IMAGES.gallery.wedding1   },
+  { _id: "1", title: "Wedding Banquet",   category: "wedding",   img: IMAGES.services.wedding   },
   { _id: "2", title: "Nigerian Cuisine",  category: "food",      img: IMAGES.gallery.food1      },
   { _id: "3", title: "Corporate Dinner",  category: "corporate", img: IMAGES.gallery.corporate1 },
   { _id: "4", title: "Celebration Setup", category: "party",     img: IMAGES.gallery.party1     },
-  { _id: "5", title: "Outdoor Event",     category: "setup",     img: IMAGES.gallery.outdoor1   },
+  { _id: "5", title: "Outdoor Event",     category: "setup",     img: IMAGES.services.outdoorEvents   },
 ];
 
 const CATEGORY_LABELS: Record<string, string> = {

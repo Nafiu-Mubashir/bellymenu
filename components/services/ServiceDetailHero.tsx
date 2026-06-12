@@ -1,18 +1,32 @@
 "use client";
-
+import HeroBackground from "@/components/ui/HeroBackground";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { ChevronRight, CheckCircle2 } from "lucide-react";
 import type { ServiceDetail } from "@/types";
+import { IMAGES } from "@/app/lib/images";
 
 interface ServiceDetailHeroProps {
   service: ServiceDetail;
 }
 
 export default function ServiceDetailHero({ service }: ServiceDetailHeroProps) {
+
+  // Map service slug → stock cover image
+  const SERVICE_COVERS: Record<string, string> = {
+    "wedding-catering":      IMAGES.services.wedding,
+    "corporate-events":      IMAGES.services.corporate,
+    "parties":               IMAGES.services.parties,
+    "private-dining":        IMAGES.services.privateDining,
+    "outdoor-events":        IMAGES.services.outdoorEvents,
+    "cocktail-receptions":   IMAGES.services.cocktail,
+  };
+  const coverSrc = SERVICE_COVERS[service.slug.current] ?? IMAGES.hero.services;
+
   return (
     <section className="relative pt-32 pb-20 bg-neutral-950 overflow-hidden">
-      <div className="pointer-events-none absolute -top-20 right-0 w-[500px] h-[500px] rounded-full bg-green-700/15 blur-[100px]" />
+      <HeroBackground src={coverSrc} priority />
+      <div className="pointer-events-none absolute -top-20 right-0 w-125 h-125 rounded-full bg-green-700/15 blur-[100px] z-10" aria-hidden="true" />
 
       <div className="relative z-10 mx-auto max-w-7xl px-5 md:px-10">
         {/* Breadcrumb */}
@@ -93,12 +107,12 @@ export default function ServiceDetailHero({ service }: ServiceDetailHeroProps) {
               className="bg-white/5 border border-white/10 rounded-2xl p-7"
             >
               <p className="text-xs font-semibold tracking-[0.16em] uppercase text-green-400 mb-5">
-                What's Included
+               {" What's Included"}
               </p>
               <ul className="space-y-3">
                 {service.highlights.map((h) => (
                   <li key={h} className="flex items-start gap-3 text-sm text-white/70 font-light">
-                    <CheckCircle2 size={15} className="text-green-500 flex-shrink-0 mt-0.5" />
+                    <CheckCircle2 size={15} className="text-green-500 shrink-0 mt-0.5" />
                     {h}
                   </li>
                 ))}

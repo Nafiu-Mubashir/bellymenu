@@ -56,7 +56,7 @@ export const IMAGES = {
 
   services: {
     /** Wedding — elegant reception table with floral centrepieces */
-    wedding: U("1519225421980-9b9571fa0f48", 1200, 800),
+    wedding: U("1465495976277-4387d4b0b4c6", 1200, 800),
     /** Corporate — smart buffet, suited-up event */
     corporate: U("1414235077428-338989a2e8c0", 1200, 800),
     /** Parties — colourful celebration spread */
@@ -64,7 +64,7 @@ export const IMAGES = {
     /** Private dining — intimate candlelit table setting */
     privateDining: U("1424847651672-bf20a4b0982b", 1200, 800),
     /** Outdoor events — garden event under a canopy */
-    outdoorEvents: U("1464366400600-ac67b7a5ba1e", 1200, 800),
+    outdoorEvents: U("1529543544282-ea669407fca3", 1200, 800),
     /** Cocktail receptions — elegant canapés / grazing board */
     cocktail: U("1567521464027-f127ff144326", 1200, 800),
   },
